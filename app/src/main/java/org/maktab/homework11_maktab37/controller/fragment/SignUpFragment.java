@@ -95,8 +95,6 @@ public class SignUpFragment extends Fragment {
         mUsername = view.findViewById(R.id.username_signUp);
         mPasswordForm = view.findViewById(R.id.password_form_signUp);
         mPassword = view.findViewById(R.id.password_signUp);
-
-
     }
 
     private boolean validateInput() {

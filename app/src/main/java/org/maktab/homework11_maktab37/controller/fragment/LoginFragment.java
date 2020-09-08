@@ -24,8 +24,6 @@ import org.maktab.homework11_maktab37.controller.activity.TaskListActivity;
 
 public class LoginFragment extends Fragment {
 
-    public static final String EXTRA_USERNAME = "extraUsername";
-    public static final String EXTRA_PASSWORD = "EXTRA_password";
     public static final String BUNDLE_KEY_USERNAME = "UserBundle";
     public static final String BUNDLE_KEY_PASSWORD = "passBundle";
     private Button mButtonLogin, mButtonSignUp;
@@ -41,18 +39,14 @@ public class LoginFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
 
     public LoginFragment() {
         // Required empty public constructor
     }
 
-    public static LoginFragment newInstance(String param1, String param2) {
+    public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,10 +54,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         if (savedInstanceState != null) {
             user = savedInstanceState.getString(BUNDLE_KEY_USERNAME);
@@ -163,8 +153,8 @@ public class LoginFragment extends Fragment {
 
     }
 
-    private void callToast(int p) {
-        Toast toast = Toast.makeText(getActivity(), p, Toast.LENGTH_SHORT);
+    private void callToast(int stringId) {
+        Toast toast = Toast.makeText(getActivity(), stringId, Toast.LENGTH_SHORT);
         toast.show();
     }
 }
