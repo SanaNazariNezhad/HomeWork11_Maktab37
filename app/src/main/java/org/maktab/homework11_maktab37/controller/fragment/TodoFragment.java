@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -28,6 +29,7 @@ public class TodoFragment extends Fragment {
     private RecyclerView mRecyclerViewTodo;
     private TodoAdapter mTodoAdapter;
     private IRepository mRepository;
+    private LinearLayout mLayoutEmptyTodo;
 
     public TodoFragment() {
         // Required empty public constructor
@@ -60,12 +62,15 @@ public class TodoFragment extends Fragment {
         mRecyclerViewTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRepository = TaskRepository.getInstance();
         List<Task> tasks = mRepository.getTodoTask();
+        if (tasks.size()==0)
+            mLayoutEmptyTodo.setVisibility(View.VISIBLE);
         mTodoAdapter = new TodoAdapter(tasks);
         mRecyclerViewTodo.setAdapter(mTodoAdapter);
     }
 
     private void findViews(View view) {
         mRecyclerViewTodo = view.findViewById(R.id.recycler_todo);
+        mLayoutEmptyTodo = view.findViewById(R.id.layout_empty_todoTask);
     }
 
     private class TodoHolder extends RecyclerView.ViewHolder {

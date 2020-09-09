@@ -18,13 +18,13 @@ public class TaskRepository implements IRepository {
 
     private TaskRepository() {
         mTasks = new ArrayList<>();
-        Random random = new Random();
+        /*Random random = new Random();
 
         for (int i = 0; i < 50; i++) {
             Date date;
             String str = "";
             String title = "";
-            int rand = random.nextInt(3);
+            int rand = random.nextInt(2);
             if (rand == 0) {
                 str = "Todo";
                 title = "Salam";
@@ -33,7 +33,7 @@ public class TaskRepository implements IRepository {
                 str = "Doing";
                 title = "Zana";
             }
-            else if (rand == 2) {
+            else if (rand == 1) {
                 str = "Done";
                 title = "Hi";
             }
@@ -41,7 +41,7 @@ public class TaskRepository implements IRepository {
             Task task = new Task(title, "HomeWork", date, str);
 
             mTasks.add(task);
-        }
+        }*/
 
     }
 

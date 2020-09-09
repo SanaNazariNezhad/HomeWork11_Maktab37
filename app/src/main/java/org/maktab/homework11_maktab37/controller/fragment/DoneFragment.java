@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -28,6 +29,7 @@ public class DoneFragment extends Fragment {
     private RecyclerView mRecyclerViewDone;
     private DoneAdapter mDoneAdapter;
     private IRepository mRepository;
+    private LinearLayout mLayoutEmptyDone;
 
     public DoneFragment() {
         // Required empty public constructor
@@ -60,12 +62,15 @@ public class DoneFragment extends Fragment {
         mRecyclerViewDone.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRepository = TaskRepository.getInstance();
         List<Task> tasks = mRepository.getDoneTask();
+        if (tasks.size()==0)
+            mLayoutEmptyDone.setVisibility(View.VISIBLE);
         mDoneAdapter = new DoneAdapter(tasks);
         mRecyclerViewDone.setAdapter(mDoneAdapter);
     }
 
     private void findViews(View view) {
         mRecyclerViewDone = view.findViewById(R.id.recycler_done);
+        mLayoutEmptyDone = view.findViewById(R.id.layout_empty_doneTask);
     }
 
     private class DoneHolder extends RecyclerView.ViewHolder {
