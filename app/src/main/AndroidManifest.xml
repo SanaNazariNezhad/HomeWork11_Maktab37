@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.maktab.homework11_maktab37">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.type.watch" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".DoneActivity"></activity>
+        <activity android:name=".DoingActivity" />
+        <activity android:name=".controller.activity.TodoActivity" />
         <activity android:name=".controller.activity.TaskListActivity" />
         <activity android:name=".controller.activity.SignUpActivity" />
         <activity android:name=".controller.activity.LoginActivity">
