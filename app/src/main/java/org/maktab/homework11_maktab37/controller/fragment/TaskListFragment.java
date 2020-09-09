@@ -3,19 +3,25 @@ package org.maktab.homework11_maktab37.controller.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.tabs.TabLayout;
 
 import org.maktab.homework11_maktab37.R;
 
 public class TaskListFragment extends Fragment {
 
     private static final String ARG_Username = "username";
+    private String mUsername;
 
-    private String mParam1;
-    private String mParam2;
+    private TabLayout mTabLayout;
+    private ViewPager2 mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
+
 
     public TaskListFragment() {
         // Required empty public constructor
@@ -32,9 +38,10 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_Username);
-        }
+
+        mUsername = getArguments().getString(ARG_Username);
+        getActivity().setTitle(mUsername);
+
     }
 
     @Override
@@ -42,7 +49,51 @@ public class TaskListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
-
+        findViews(view);
+        initTab();
         return view;
+    }
+
+    private void findViews(View view) {
+        mTabLayout = view.findViewById(R.id.tabs);
+        mViewPager = view.findViewById(R.id.viewpager);
+    }
+
+    private void initTab() {
+
+        addTabs();
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mViewPagerAdapter = new ViewPagerAdapter(getActivity(), mTabLayout.getTabCount());
+        mViewPager.setAdapter(mViewPagerAdapter);
+
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mTabLayout.setScrollPosition(position, 0f, true);
+            }
+        });
+
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    private void addTabs() {
+        mTabLayout.addTab(mTabLayout.newTab().setText("TODO"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("DOING"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("DONE"));
     }
 }
