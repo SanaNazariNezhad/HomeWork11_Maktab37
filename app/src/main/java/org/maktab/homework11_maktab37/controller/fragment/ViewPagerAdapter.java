@@ -1,13 +1,24 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class ViewPagerAdapter extends FragmentStateAdapter {
+/*public class ViewPagerAdapter extends FragmentStateAdapter {
     int mNumOfTabs;
+    Context mContext;
+
+    public Context getContext() {
+        return mContext;
+    }
+
+    public void setContext(Context context) {
+        mContext = context;
+    }
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, int numOfTabs) {
         super(fragmentActivity);
@@ -18,7 +29,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                TodoFragment todoFragment = new TodoFragment();
+                TodoFragment todoFragment = TodoFragment.newInstance(mContext);
                 return todoFragment;
             case 1:
                 DoingFragment doingFragment = new DoingFragment();
@@ -34,5 +45,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return mNumOfTabs;
     }
-}
+}*/
+
 

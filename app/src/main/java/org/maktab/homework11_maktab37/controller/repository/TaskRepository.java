@@ -5,16 +5,26 @@ import org.maktab.homework11_maktab37.controller.model.Task;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
-public class TaskRepository implements IRepository{
+public class TaskRepository implements IRepository {
 
     public static TaskRepository sInstance;
     private List<Task> mTasks;
 
     private TaskRepository() {
         mTasks = new ArrayList<>();
+
+        for (int i = 0; i < 50; i++) {
+            Date date;
+            date = DateUtils.randomDate();
+            Task task = new Task("Title", "HomeWork", date, "Todo");
+
+            mTasks.add(task);
+        }
 
     }
 
@@ -58,6 +68,39 @@ public class TaskRepository implements IRepository{
 
     }
 
+    @Override
+    public List<Task> getTodoTask() {
+        List<Task> todoTasks = new ArrayList<>();
+        for (Task task : mTasks) {
+            if (task.getState().equalsIgnoreCase("todo"))
+                todoTasks.add(task);
+
+        }
+        return todoTasks;
+    }
+
+    @Override
+    public List<Task> getDoingTask() {
+        List<Task> doingTasks = new ArrayList<>();
+        for (Task task : mTasks) {
+            if (task.getState().equalsIgnoreCase("doing"))
+                doingTasks.add(task);
+
+        }
+        return doingTasks;
+    }
+
+    @Override
+    public List<Task> getDoneTask() {
+        List<Task> doneTasks = new ArrayList<>();
+        for (Task task : mTasks) {
+            if (task.getState().equalsIgnoreCase("done"))
+                doneTasks.add(task);
+
+        }
+        return doneTasks;
+    }
+
     public static TaskRepository getInstance() {
         if (sInstance == null)
             sInstance = new TaskRepository();
@@ -65,4 +108,23 @@ public class TaskRepository implements IRepository{
         return sInstance;
     }
 
+
+    private static class DateUtils {
+        public static final int YEAR_START = 2000;
+        public static final int YEAR_END = 2020;
+
+        public static Date randomDate() {
+            GregorianCalendar gc = new GregorianCalendar();
+            int year = randBetween(YEAR_START, YEAR_END);
+            gc.set(gc.YEAR, year);
+            int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
+            gc.set(gc.DAY_OF_YEAR, dayOfYear);
+
+            return gc.getTime();
+        }
+
+        public static int randBetween(int start, int end) {
+            return start + (int) Math.round(Math.random() * (end - start));
+        }
+    }
 }

@@ -16,7 +16,7 @@ public class TodoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TodoFragment newInstance(String param1, String param2) {
+    public static TodoFragment newInstance() {
         TodoFragment fragment = new TodoFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
