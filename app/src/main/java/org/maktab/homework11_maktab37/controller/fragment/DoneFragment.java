@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.maktab.homework11_maktab37.InsertTaskFragment;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.model.Task;
 import org.maktab.homework11_maktab37.controller.repository.IRepository;
@@ -27,6 +28,9 @@ import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
 import java.util.List;
 
 public class DoneFragment extends Fragment {
+
+    public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
+    public static final int REQUEST_CODE_INSERT_TASK = 0;
 
     private RecyclerView mRecyclerViewDone;
     private DoneAdapter mDoneAdapter;
@@ -68,6 +72,15 @@ public class DoneFragment extends Fragment {
         mActionButtonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InsertTaskFragment insertTaskFragment = InsertTaskFragment.newInstance();
+
+                insertTaskFragment.setTargetFragment(
+                        DoneFragment.this,
+                        REQUEST_CODE_INSERT_TASK);
+
+                /*insertTaskFragment.show(
+                        getActivity().getSupportFragmentManager(),
+                        FRAGMENT_TAG_INSERT_TASK);*/
 
             }
         });
