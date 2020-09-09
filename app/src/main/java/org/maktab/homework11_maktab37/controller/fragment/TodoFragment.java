@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -29,7 +30,7 @@ public class TodoFragment extends Fragment {
     private RecyclerView mRecyclerViewTodo;
     private TodoAdapter mTodoAdapter;
     private IRepository mRepository;
-    private LinearLayout mLayoutEmptyTodo;
+    private RelativeLayout mLayoutEmptyTodo;
 
     public TodoFragment() {
         // Required empty public constructor

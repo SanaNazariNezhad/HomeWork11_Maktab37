@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -29,7 +30,7 @@ public class DoingFragment extends Fragment {
     private RecyclerView mRecyclerViewDoing;
     private DoingAdapter mDoingAdapter;
     private IRepository mRepository;
-    private LinearLayout mLayoutEmptyDoing;
+    private RelativeLayout mLayoutEmptyDoing;
 
     public DoingFragment() {
         // Required empty public constructor
