@@ -6,6 +6,8 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import org.maktab.homework11_maktab37.controller.fragment.TodoFragment;
+import org.maktab.homework11_maktab37.controller.repository.IRepository;
+import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
 
 public class TodoActivity extends SingleFragmentActivity {
 

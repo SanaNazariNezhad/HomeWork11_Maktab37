@@ -26,6 +26,7 @@ import org.maktab.homework11_maktab37.controller.model.Task;
 import org.maktab.homework11_maktab37.controller.repository.IRepository;
 import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DoneFragment extends Fragment {
@@ -48,6 +49,13 @@ public class DoneFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        updateUI();
     }
 
     @Override

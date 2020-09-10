@@ -1,5 +1,7 @@
 package org.maktab.homework11_maktab37.controller.repository;
 
+import android.util.Log;
+
 import org.maktab.homework11_maktab37.controller.model.Task;
 
 import java.text.DateFormat;
@@ -18,6 +20,7 @@ public class TaskRepository implements IRepository {
 
     private TaskRepository() {
         mTasks = new ArrayList<>();
+        Log.d("TaskSize_constructor" , " " + mTasks.size());
         /*Random random = new Random();
 
         for (int i = 0; i < 50; i++) {
@@ -63,6 +66,7 @@ public class TaskRepository implements IRepository {
     @Override
     public void insertTask(Task task) {
         mTasks.add(task);
+        Log.d("TaskSize_insert" , " " + mTasks.size());
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.maktab.homework11_maktab37.controller.fragment.DoingFragment;
+import org.maktab.homework11_maktab37.controller.repository.IRepository;
+import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
 
 public class DoingActivity extends SingleFragmentActivity {
 

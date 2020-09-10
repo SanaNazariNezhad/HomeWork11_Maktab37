@@ -15,6 +15,11 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import org.maktab.homework11_maktab37.R;
+import org.maktab.homework11_maktab37.controller.model.Task;
+import org.maktab.homework11_maktab37.controller.repository.IRepository;
+import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
+
+import java.util.List;
 
 public class TaskListFragment extends Fragment {
 
