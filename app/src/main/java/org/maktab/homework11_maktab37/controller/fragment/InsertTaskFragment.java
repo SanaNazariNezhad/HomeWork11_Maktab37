@@ -269,10 +269,12 @@ public class InsertTaskFragment extends DialogFragment {
 
 
     private DateFormat getDateFormat() {
-        return new SimpleDateFormat("yyyy/MM/dd");
+        //"yyyy/MM/dd"
+        return new SimpleDateFormat("MMM dd,yyyy");
     }
 
     private DateFormat getTimeFormat() {
-        return new SimpleDateFormat("HH:mm:ss");
+        //"HH:mm:ss"
+        return new SimpleDateFormat("h:mm a");
     }
 }

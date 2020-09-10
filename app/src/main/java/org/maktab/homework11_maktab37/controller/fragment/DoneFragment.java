@@ -1,6 +1,7 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ public class DoneFragment extends Fragment {
 
     public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
     public static final int REQUEST_CODE_INSERT_TASK = 0;
+    public static final String TAG = "DoneFragment";
     private RecyclerView mRecyclerViewDone;
     private DoneAdapter mDoneAdapter;
     private IRepository mRepository;
@@ -52,10 +55,26 @@ public class DoneFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        Log.d(TAG, "DoneFragmentonAttach");
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
 
+        Log.d(TAG, "DoneFragmentonPause");
+
         updateUI();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d(TAG, "DoneFragmentonResume");
     }
 
     @Override
@@ -63,6 +82,8 @@ public class DoneFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mRepository = TaskRepository.getInstance();
+
+        Log.d(TAG, "DoneFragmentonCreate");
     }
 
     @Override
@@ -74,6 +95,7 @@ public class DoneFragment extends Fragment {
         checkEmptyLayout();
         initViews();
         listeners();
+        Log.d(TAG, "DoneFragmentonCreateView");
         return view;
     }
 
