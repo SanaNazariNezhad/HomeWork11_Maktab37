@@ -1,9 +1,12 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,8 +53,8 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mRepository = TaskRepository.getInstance();
-        mTasks = mRepository.getTodoTask();
     }
 
     @Override
@@ -61,17 +63,33 @@ public class TodoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
         findViews(view);
+        checkEmptyLayout();
         initViews();
         listeners();
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != Activity.RESULT_OK || data == null)
+            return;
+
+        if (requestCode == REQUEST_CODE_INSERT_TASK) {
+            updateUI();
+
+
+        }
+    }
+
+    private void findViews(View view) {
+        mRecyclerViewTodo = view.findViewById(R.id.recycler_todo);
+        mLayoutEmptyTodo = view.findViewById(R.id.layout_empty_todoTask);
+        mActionButtonInsert = view.findViewById(R.id.fab_todo);
+    }
+
     private void initViews() {
         mRecyclerViewTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (mTasks.size()==0)
-            mLayoutEmptyTodo.setVisibility(View.VISIBLE);
-        mTodoAdapter = new TodoAdapter(mTasks);
-        mRecyclerViewTodo.setAdapter(mTodoAdapter);
+        updateUI();
     }
 
     private void listeners() {
@@ -92,10 +110,25 @@ public class TodoFragment extends Fragment {
         });
     }
 
-    private void findViews(View view) {
-        mRecyclerViewTodo = view.findViewById(R.id.recycler_todo);
-        mLayoutEmptyTodo = view.findViewById(R.id.layout_empty_todoTask);
-        mActionButtonInsert = view.findViewById(R.id.fab_todo);
+    private void updateUI() {
+
+        checkEmptyLayout();
+        if (mTodoAdapter == null) {
+            mTodoAdapter = new TodoAdapter(mTasks);
+            mRecyclerViewTodo.setAdapter(mTodoAdapter);
+        }
+        else {
+            mTodoAdapter.setTasks(mTasks);
+            mTodoAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void checkEmptyLayout() {
+        mTasks = mRepository.getTodoTask();
+        if (mTasks.size()==0)
+            mLayoutEmptyTodo.setVisibility(View.VISIBLE);
+        else
+            mLayoutEmptyTodo.setVisibility(View.GONE);
     }
 
     private class TodoHolder extends RecyclerView.ViewHolder {
@@ -122,7 +155,7 @@ public class TodoFragment extends Fragment {
         }
     }
 
-    private class TodoAdapter extends RecyclerView.Adapter<TodoHolder>{
+    private class TodoAdapter extends RecyclerView.Adapter<TodoHolder> {
 
         private List<Task> mTasks;
 

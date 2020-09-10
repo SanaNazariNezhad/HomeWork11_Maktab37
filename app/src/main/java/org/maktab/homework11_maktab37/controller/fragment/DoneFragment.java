@@ -1,9 +1,12 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +32,6 @@ public class DoneFragment extends Fragment {
 
     public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
     public static final int REQUEST_CODE_INSERT_TASK = 0;
-
     private RecyclerView mRecyclerViewDone;
     private DoneAdapter mDoneAdapter;
     private IRepository mRepository;
@@ -51,8 +53,8 @@ public class DoneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mRepository = TaskRepository.getInstance();
-        mTasks = mRepository.getDoneTask();
     }
 
     @Override
@@ -61,9 +63,34 @@ public class DoneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_done, container, false);
         findViews(view);
+        checkEmptyLayout();
         initViews();
         listeners();
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != Activity.RESULT_OK || data == null)
+            return;
+
+        if (requestCode == REQUEST_CODE_INSERT_TASK) {
+            updateUI();
+
+
+        }
+    }
+
+    private void findViews(View view) {
+        mRecyclerViewDone = view.findViewById(R.id.recycler_done);
+        mLayoutEmptyDone = view.findViewById(R.id.layout_empty_doneTask);
+        mActionButtonInsert = view.findViewById(R.id.fab_done);
+
+    }
+
+    private void initViews() {
+        mRecyclerViewDone.setLayoutManager(new LinearLayoutManager(getActivity()));
+        updateUI();
     }
 
     private void listeners() {
@@ -84,20 +111,25 @@ public class DoneFragment extends Fragment {
         });
     }
 
-    private void initViews() {
-        mRecyclerViewDone.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (mTasks.size() == 0)
-            mLayoutEmptyDone.setVisibility(View.VISIBLE);
-        mDoneAdapter = new DoneAdapter(mTasks);
-        mRecyclerViewDone.setAdapter(mDoneAdapter);
+    private void updateUI() {
+
+        checkEmptyLayout();
+        if (mDoneAdapter == null) {
+            mDoneAdapter = new DoneAdapter(mTasks);
+            mRecyclerViewDone.setAdapter(mDoneAdapter);
+        }
+        else {
+            mDoneAdapter.setTasks(mTasks);
+            mDoneAdapter.notifyDataSetChanged();
+        }
     }
 
-    private void findViews(View view) {
-        mRecyclerViewDone = view.findViewById(R.id.recycler_done);
-        mLayoutEmptyDone = view.findViewById(R.id.layout_empty_doneTask);
-
-        mActionButtonInsert = view.findViewById(R.id.fab_done);
-
+    private void checkEmptyLayout() {
+        mTasks = mRepository.getDoneTask();
+        if (mTasks.size()==0)
+            mLayoutEmptyDone.setVisibility(View.VISIBLE);
+        else
+            mLayoutEmptyDone.setVisibility(View.GONE);
     }
 
     private class DoneHolder extends RecyclerView.ViewHolder {
@@ -121,10 +153,6 @@ public class DoneFragment extends Fragment {
             TextDrawable drawable = TextDrawable.builder()
                     .buildRound(string, Color.RED);
             mImageViewProfile.setImageDrawable(drawable);
-        }
-
-        public ImageView getImageViewProfile() {
-            return mImageViewProfile;
         }
     }
 

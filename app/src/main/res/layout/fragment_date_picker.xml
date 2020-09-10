@@ -4,7 +4,7 @@
     android:id="@+id/date_picker_task"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatePickerFragment">
+    tools:context=".controller.fragment.DatePickerFragment">
 
 
 </DatePicker>

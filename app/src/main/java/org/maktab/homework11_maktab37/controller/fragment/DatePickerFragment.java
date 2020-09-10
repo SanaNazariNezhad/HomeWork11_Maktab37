@@ -1,4 +1,4 @@
-package org.maktab.homework11_maktab37;
+package org.maktab.homework11_maktab37.controller.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,9 +14,10 @@ import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+
+import org.maktab.homework11_maktab37.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +30,6 @@ public class DatePickerFragment extends DialogFragment {
     private Date mTaskDate;
 
     private DatePicker mDatePicker;
-    private Button mButtonOk, mButtonCancel;
     private Calendar mCalendar;
 
     public DatePickerFragment() {
