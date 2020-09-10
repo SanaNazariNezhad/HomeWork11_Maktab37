@@ -165,12 +165,10 @@ public class TodoFragment extends Fragment {
             mImageViewProfile.setImageDrawable(drawable);
         }
         private DateFormat getDateFormat() {
-            //"yyyy/MM/dd"
             return new SimpleDateFormat("MMM dd,yyyy");
         }
 
         private DateFormat getTimeFormat() {
-            //"HH:mm:ss"
             return new SimpleDateFormat("h:mm a");
         }
         private String createDateFormat (Task task){
