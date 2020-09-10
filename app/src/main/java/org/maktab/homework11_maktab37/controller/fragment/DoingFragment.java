@@ -35,6 +35,8 @@ public class DoingFragment extends Fragment {
 
     public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
     public static final int REQUEST_CODE_INSERT_TASK = 0;
+    public static final String FRAGMENT_TAG_EDIT_TASK = "EditTask";
+    public static final int REQUEST_CODE_EDIT_TASK = 1;
     private RecyclerView mRecyclerViewDoing;
     private DoingAdapter mDoingAdapter;
     private IRepository mRepository;
@@ -84,7 +86,7 @@ public class DoingFragment extends Fragment {
         if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
-        if (requestCode == REQUEST_CODE_INSERT_TASK) {
+        if (requestCode == REQUEST_CODE_INSERT_TASK || requestCode == REQUEST_CODE_EDIT_TASK) {
             updateUI();
 
 
@@ -152,6 +154,20 @@ public class DoingFragment extends Fragment {
             mTextViewTitle = itemView.findViewById(R.id.txtview_title);
             mTextViewDate = itemView.findViewById(R.id.txtview_date);
             mImageViewProfile = itemView.findViewById(R.id.image_profile);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
+
+                    editTaskFragment.setTargetFragment(
+                            DoingFragment.this,
+                            REQUEST_CODE_EDIT_TASK);
+
+                    editTaskFragment.show(
+                            getActivity().getSupportFragmentManager(),
+                            FRAGMENT_TAG_EDIT_TASK);
+                }
+            });
         }
 
         public void bindTaskDoing(Task task) {
