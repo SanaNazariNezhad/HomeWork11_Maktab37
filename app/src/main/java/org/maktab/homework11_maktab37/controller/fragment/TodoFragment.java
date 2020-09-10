@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.model.Task;
@@ -27,10 +28,14 @@ import java.util.List;
 
 public class TodoFragment extends Fragment {
 
+    public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
+    public static final int REQUEST_CODE_INSERT_TASK = 0;
     private RecyclerView mRecyclerViewTodo;
     private TodoAdapter mTodoAdapter;
     private IRepository mRepository;
+    private List<Task> mTasks;
     private RelativeLayout mLayoutEmptyTodo;
+    private FloatingActionButton mActionButtonInsert;
 
     public TodoFragment() {
         // Required empty public constructor
@@ -46,7 +51,8 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mRepository = TaskRepository.getInstance();
+        mTasks = mRepository.getTodoTask();
     }
 
     @Override
@@ -56,22 +62,40 @@ public class TodoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
         findViews(view);
         initViews();
+        listeners();
         return view;
     }
 
     private void initViews() {
         mRecyclerViewTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRepository = TaskRepository.getInstance();
-        List<Task> tasks = mRepository.getTodoTask();
-        if (tasks.size()==0)
+        if (mTasks.size()==0)
             mLayoutEmptyTodo.setVisibility(View.VISIBLE);
-        mTodoAdapter = new TodoAdapter(tasks);
+        mTodoAdapter = new TodoAdapter(mTasks);
         mRecyclerViewTodo.setAdapter(mTodoAdapter);
+    }
+
+    private void listeners() {
+        mActionButtonInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InsertTaskFragment insertTaskFragment = InsertTaskFragment.newInstance();
+
+                insertTaskFragment.setTargetFragment(
+                        TodoFragment.this,
+                        REQUEST_CODE_INSERT_TASK);
+
+                insertTaskFragment.show(
+                        getActivity().getSupportFragmentManager(),
+                        FRAGMENT_TAG_INSERT_TASK);
+
+            }
+        });
     }
 
     private void findViews(View view) {
         mRecyclerViewTodo = view.findViewById(R.id.recycler_todo);
         mLayoutEmptyTodo = view.findViewById(R.id.layout_empty_todoTask);
+        mActionButtonInsert = view.findViewById(R.id.fab_todo);
     }
 
     private class TodoHolder extends RecyclerView.ViewHolder {

@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.model.Task;
@@ -27,10 +28,14 @@ import java.util.List;
 
 public class DoingFragment extends Fragment {
 
+    public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
+    public static final int REQUEST_CODE_INSERT_TASK = 0;
     private RecyclerView mRecyclerViewDoing;
     private DoingAdapter mDoingAdapter;
     private IRepository mRepository;
+    private List<Task> mTasks;
     private RelativeLayout mLayoutEmptyDoing;
+    private FloatingActionButton mActionButtonInsert;
 
     public DoingFragment() {
         // Required empty public constructor
@@ -46,7 +51,8 @@ public class DoingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mRepository = TaskRepository.getInstance();
+        mTasks = mRepository.getDoingTask();
     }
 
     @Override
@@ -56,22 +62,40 @@ public class DoingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_doing, container, false);
         findViews(view);
         initViews();
+        listeners();
         return view;
+    }
+
+    private void listeners() {
+        mActionButtonInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InsertTaskFragment insertTaskFragment = InsertTaskFragment.newInstance();
+
+                insertTaskFragment.setTargetFragment(
+                        DoingFragment.this,
+                        REQUEST_CODE_INSERT_TASK);
+
+                insertTaskFragment.show(
+                        getActivity().getSupportFragmentManager(),
+                        FRAGMENT_TAG_INSERT_TASK);
+
+            }
+        });
     }
 
     private void initViews() {
         mRecyclerViewDoing.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRepository = TaskRepository.getInstance();
-        List<Task> tasks = mRepository.getDoingTask();
-        if (tasks.size()==0)
+        if (mTasks.size()==0)
             mLayoutEmptyDoing.setVisibility(View.VISIBLE);
-        mDoingAdapter = new DoingAdapter(tasks);
+        mDoingAdapter = new DoingAdapter(mTasks);
         mRecyclerViewDoing.setAdapter(mDoingAdapter);
     }
 
     private void findViews(View view) {
         mRecyclerViewDoing = view.findViewById(R.id.recycler_doing);
         mLayoutEmptyDoing = view.findViewById(R.id.layout_empty_doingTask);
+        mActionButtonInsert = view.findViewById(R.id.fab_doing);
     }
 
     private class DoingHolder extends RecyclerView.ViewHolder {

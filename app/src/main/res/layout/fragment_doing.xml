@@ -9,59 +9,60 @@
     tools:context=".controller.fragment.DoingFragment">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/layout_empty_doingTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/imgView_emptyTaskList"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="150dp"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/ic_bulleted_list" />
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView_emptyMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgView_emptyTaskList"
-            android:layout_marginStart="70dp"
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:text="@string/empty_task_list_doing" />
+            <ImageView
+                android:id="@+id/imgView_emptyTaskList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bulleted_list" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_empty_doing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_add" />
+            <TextView
+                android:id="@+id/textView_emptyMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/empty_task_list_doing"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
+        android:id="@+id/recycler_doing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_doing"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_doing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_add"/>
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_add" />
 
 </RelativeLayout>
