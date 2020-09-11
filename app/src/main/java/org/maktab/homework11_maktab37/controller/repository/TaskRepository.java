@@ -21,30 +21,6 @@ public class TaskRepository implements IRepository {
     private TaskRepository() {
         mTasks = new ArrayList<>();
         Log.d("TaskSize_constructor" , " " + mTasks.size());
-        /*Random random = new Random();
-
-        for (int i = 0; i < 50; i++) {
-            Date date;
-            String str = "";
-            String title = "";
-            int rand = random.nextInt(2);
-            if (rand == 0) {
-                str = "Todo";
-                title = "Salam";
-            }
-            else if (rand == 1) {
-                str = "Doing";
-                title = "Zana";
-            }
-            else if (rand == 1) {
-                str = "Done";
-                title = "Hi";
-            }
-            date = DateUtils.randomDate();
-            Task task = new Task(title, "HomeWork", date, str);
-
-            mTasks.add(task);
-        }*/
 
     }
 
@@ -77,6 +53,11 @@ public class TaskRepository implements IRepository {
                 return;
             }
         }
+    }
+
+    @Override
+    public void deleteAllTask() {
+        mTasks.clear();
     }
 
     @Override
@@ -127,25 +108,5 @@ public class TaskRepository implements IRepository {
             sInstance = new TaskRepository();
 
         return sInstance;
-    }
-
-
-    private static class DateUtils {
-        public static final int YEAR_START = 2000;
-        public static final int YEAR_END = 2020;
-
-        public static Date randomDate() {
-            GregorianCalendar gc = new GregorianCalendar();
-            int year = randBetween(YEAR_START, YEAR_END);
-            gc.set(gc.YEAR, year);
-            int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
-            gc.set(gc.DAY_OF_YEAR, dayOfYear);
-
-            return gc.getTime();
-        }
-
-        public static int randBetween(int start, int end) {
-            return start + (int) Math.round(Math.random() * (end - start));
-        }
     }
 }
