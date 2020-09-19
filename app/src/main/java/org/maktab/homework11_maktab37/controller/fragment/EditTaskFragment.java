@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ public class EditTaskFragment extends DialogFragment {
     public static final String ARGUMENT_TASK_ID = "Bundle_key_TaskId";
 
     private Button mButtonSave, mButtonDelete, mButtonEdit, mButtonDate, mButtonTime;
-    private CheckBox mCheckBoxTodo, mCheckBoxDoing, mCheckBoxDone;
+    private RadioButton mTodo, mDoing, mDone;
     private TextInputLayout mTitleForm;
     private TextInputLayout mDescriptionForm;
     private TextInputEditText mTitle;
@@ -125,44 +126,61 @@ public class EditTaskFragment extends DialogFragment {
         mButtonSave = view.findViewById(R.id.btn_save_edit);
         mButtonDelete = view.findViewById(R.id.btn_delete_edit);
         mButtonEdit = view.findViewById(R.id.btn_edit_edit);
-        mCheckBoxTodo = view.findViewById(R.id.checkBox_todo_edit);
-        mCheckBoxDoing = view.findViewById(R.id.checkBox_doing_edit);
-        mCheckBoxDone = view.findViewById(R.id.checkBox_done_edit);
+        mTodo = view.findViewById(R.id.radioBtn_todo_edit);
+        mDoing = view.findViewById(R.id.radioBtn_doing_edit);
+        mDone = view.findViewById(R.id.radioBtn_done_edit);
     }
 
     private void setData(Task task){
         mTitle.setText(task.getTitle());
+        mTitleForm.setEnabled(false);
         mDescription.setText(task.getDescription());
+        mDescriptionForm.setEnabled(false);
         DateFormat dateFormat = getDateFormat();
         mButtonDate.setText(dateFormat.format(task.getDate()));
+        mButtonDate.setEnabled(false);
         DateFormat timeFormat = getTimeFormat();
         mButtonTime.setText(timeFormat.format(task.getDate()));
+        mButtonTime.setEnabled(false);
         if (task.getState().equalsIgnoreCase("Todo"))
-            mCheckBoxTodo.setChecked(true);
+            mTodo.setChecked(true);
         else if (task.getState().equalsIgnoreCase("Doing"))
-            mCheckBoxDoing.setChecked(true);
+            mDoing.setChecked(true);
         else if (task.getState().equalsIgnoreCase("Done"))
-            mCheckBoxDone.setChecked(true);
+            mDone.setChecked(true);
+        mTodo.setEnabled(false);
+        mDoing.setEnabled(false);
+        mDone.setEnabled(false);
     }
 
     private void listeners() {
         mButtonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateInput()) {
-                    sendResult();
-                    dismiss();
-                } else {
-                    int strId = R.string.toast_insert;
-                    Toast toast = Toast.makeText(getActivity(), strId, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                mTitleForm.setEnabled(true);
+                mDescriptionForm.setEnabled(true);
+                mButtonDate.setEnabled(true);
+                mButtonTime.setEnabled(true);
+                mTodo.setEnabled(true);
+                mDoing.setEnabled(true);
+                mDone.setEnabled(true);
             }
         });
         mButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                if (mTitleForm.isEnabled()) {
+                    if (validateInput()) {
+                        sendResult();
+                        dismiss();
+                    } else {
+                        int strId = R.string.toast_insert;
+                        Toast toast = Toast.makeText(getActivity(), strId, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }else {
+                    dismiss();
+                }
             }
         });
         mButtonDate.setOnClickListener(new View.OnClickListener() {
@@ -221,8 +239,8 @@ public class EditTaskFragment extends DialogFragment {
 
     private boolean validateInput() {
         if (mTitle.getText() != null && mDescription.getText() != null && mButtonDate.getText() != null &&
-                mButtonTime.getText() != null && (mCheckBoxTodo.isChecked() || mCheckBoxDoing.isChecked()
-                || mCheckBoxDone.isChecked())) {
+                mButtonTime.getText() != null && (mTodo.isChecked() || mDoing.isChecked()
+                || mDone.isChecked())) {
             return true;
         } else
             return false;
@@ -230,11 +248,11 @@ public class EditTaskFragment extends DialogFragment {
 
     private void editTask(){
         String state = "";
-        if (mCheckBoxTodo.isChecked())
+        if (mTodo.isChecked())
             state = "Todo";
-        else if (mCheckBoxDoing.isChecked())
+        else if (mDoing.isChecked())
             state = "Doing";
-        else if (mCheckBoxDone.isChecked())
+        else if (mDone.isChecked())
             state = "Done";
         mTask.setTitle(mTitle.getText().toString());
         mTask.setDescription(mDescription.getText().toString());

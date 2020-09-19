@@ -207,7 +207,7 @@ public abstract class TabsFragment extends Fragment {
             mTextViewTitle.setText(task.getTitle());
             String date = createDateFormat(task);
             mTextViewDate.setText(date);
-            int color = R.color.circleImage;
+            int color = Color.parseColor("#ff80aa");
             String string = task.getTitle().substring(0,1);
             TextDrawable drawable = TextDrawable.builder()
                     .buildRound(string,color);

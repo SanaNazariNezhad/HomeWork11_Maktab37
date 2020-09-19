@@ -10,9 +10,11 @@
     <string name="date_picker_title">Date of task:</string>
     <string name="time_picker_title">Time of task:</string>
     <string name="delete_all_title">Delete all tasks:</string>
+    <string name="no_tasks">There aren\'t any Tasks.</string>
     <string name="delete_all_question">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="exit">Exit</string>
     <string name="empty_task_list">You Dont Have Any Tasks.</string>
     <string name="title">Title</string>
     <string name="description">Description</string>

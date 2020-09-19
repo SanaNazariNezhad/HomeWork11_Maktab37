@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -63,6 +63,7 @@
         app:fab_addButtonColorNormal="@color/colorAccent"
         app:fab_addButtonColorPressed="@color/colorPrimary"
         app:fab_addButtonPlusIconColor="@color/cardview_dark_background"
+        app:fab_expandDirection="left"
         app:fab_addButtonSize="normal"
         app:fab_labelsPosition="left">
 

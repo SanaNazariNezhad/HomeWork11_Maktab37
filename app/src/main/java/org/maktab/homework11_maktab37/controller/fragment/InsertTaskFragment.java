@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -43,7 +44,7 @@ public class InsertTaskFragment extends DialogFragment {
     public static final String BUNDLE_KEY_TIME = "BUNDLE_KEY_TIME";
 
     private Button mButtonSave, mButtonCancel, mButtonDate, mButtonTime;
-    private CheckBox mCheckBoxTodo, mCheckBoxDoing, mCheckBoxDone;
+    private RadioButton mTodo, mDoing, mDone;
     private TextInputLayout mTitleForm;
     private TextInputLayout mDescriptionForm;
     private TextInputEditText mTitle;
@@ -125,9 +126,9 @@ public class InsertTaskFragment extends DialogFragment {
         mButtonTime = view.findViewById(R.id.btn_time_insert);
         mButtonSave = view.findViewById(R.id.btn_save_insert);
         mButtonCancel = view.findViewById(R.id.btn_cancel_insert);
-        mCheckBoxTodo = view.findViewById(R.id.checkBox_todo);
-        mCheckBoxDoing = view.findViewById(R.id.checkBox_doing);
-        mCheckBoxDone = view.findViewById(R.id.checkBox_done);
+        mTodo = view.findViewById(R.id.radioBtn_todo);
+        mDoing = view.findViewById(R.id.radioBtn_doing);
+        mDone = view.findViewById(R.id.radioBtn_done);
     }
 
     private void listeners() {
@@ -220,8 +221,8 @@ public class InsertTaskFragment extends DialogFragment {
 
     private boolean validateInput() {
         if (mTitle.getText() != null && mDescription.getText() != null && mButtonDate.getText() != null &&
-                mButtonTime.getText() != null && (mCheckBoxTodo.isChecked() || mCheckBoxDoing.isChecked()
-                || mCheckBoxDone.isChecked())) {
+                mButtonTime.getText() != null && (mTodo.isChecked() || mDoing.isChecked()
+                || mDone.isChecked())) {
            return true;
         } else
             return false;
@@ -229,11 +230,11 @@ public class InsertTaskFragment extends DialogFragment {
 
     private void createTask(){
         String state = "";
-        if (mCheckBoxTodo.isChecked())
+        if (mTodo.isChecked())
             state = "Todo";
-        else if (mCheckBoxDoing.isChecked())
+        else if (mDoing.isChecked())
             state = "Doing";
-        else if (mCheckBoxDone.isChecked())
+        else if (mDone.isChecked())
             state = "Done";
         mTask = new Task(mTitle.getText().toString(),mDescription.getText().toString(),mCalendar.getTime(),state);
     }
