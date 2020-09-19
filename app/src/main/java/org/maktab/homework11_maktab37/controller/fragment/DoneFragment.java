@@ -1,10 +1,11 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+
 import androidx.fragment.app.Fragment;
 
 public class DoneFragment extends TabsFragment {
-
     @Override
     public Fragment createFragment() {
         return new DoneFragment();
@@ -17,4 +18,5 @@ public class DoneFragment extends TabsFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 }

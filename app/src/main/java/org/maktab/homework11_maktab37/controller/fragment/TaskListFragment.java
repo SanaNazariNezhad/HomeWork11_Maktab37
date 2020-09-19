@@ -133,5 +133,7 @@ public class TaskListFragment extends Fragment {
         public int getItemCount() {
             return mNumOfTabs;
         }
+
+        
     }
 }

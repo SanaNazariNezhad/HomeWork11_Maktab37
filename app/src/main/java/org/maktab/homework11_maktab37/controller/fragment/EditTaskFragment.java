@@ -52,9 +52,6 @@ public class EditTaskFragment extends DialogFragment {
     private String mDate, mTime;
     private boolean mFlag;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     public EditTaskFragment() {
         // Required empty public constructor
     }

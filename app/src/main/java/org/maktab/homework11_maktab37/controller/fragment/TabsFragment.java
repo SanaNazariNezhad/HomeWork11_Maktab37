@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public abstract class TabsFragment extends Fragment {
     private FloatingActionButton mActionButtonInsert;
     private FloatingActionButton mActionButtonDelete;
     private FloatingActionButton mActionButtonLogOut;
-    private FloatingActionsMenu mFloatingActionsMenu;
+    private boolean isVisible;
 
 
     public TabsFragment() {
@@ -93,10 +94,33 @@ public abstract class TabsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint() && !isVisible) {
+            //your code
+        }
+        isVisible = true;
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isVisible) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //your code
+                }
+            }, 500);
+
+        }
+    }
+
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.recycler);
         mLayoutEmpty = view.findViewById(R.id.layout_empty);
-        mFloatingActionsMenu = view.findViewById(R.id.fam);
         mActionButtonInsert = view.findViewById(R.id.fab_insert);
         mActionButtonDelete = view.findViewById(R.id.fab_delete);
         mActionButtonLogOut = view.findViewById(R.id.fab_logOut);
