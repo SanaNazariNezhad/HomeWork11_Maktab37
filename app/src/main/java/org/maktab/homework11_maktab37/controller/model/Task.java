@@ -47,10 +47,14 @@ public class Task {
     }
 
     public Task(String title, String description, Date date, String state) {
+       this(UUID.randomUUID(),title,description,date,state);
+    }
+
+    public Task(UUID id,String title, String description, Date date, String state) {
         mTitle = title;
         mDescription = description;
         mDate = date;
         mState = state;
-        mId = UUID.randomUUID();
+        mId = id;
     }
 }

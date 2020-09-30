@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.model.Task;
 import org.maktab.homework11_maktab37.controller.repository.IRepository;
+import org.maktab.homework11_maktab37.controller.repository.TaskDBRepository;
 import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
 
 import java.text.DateFormat;
@@ -75,7 +76,7 @@ public class InsertTaskFragment extends DialogFragment {
             mFlag = true;
 
         }
-        mRepository = TaskRepository.getInstance();
+        mRepository = TaskDBRepository.getInstance(getActivity());
         mCalendar = Calendar.getInstance();
     }
 

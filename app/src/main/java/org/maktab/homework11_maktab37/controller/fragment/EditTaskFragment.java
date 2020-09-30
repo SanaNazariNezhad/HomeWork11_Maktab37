@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.model.Task;
 import org.maktab.homework11_maktab37.controller.repository.IRepository;
+import org.maktab.homework11_maktab37.controller.repository.TaskDBRepository;
 import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
 
 import java.text.DateFormat;
@@ -69,7 +70,7 @@ public class EditTaskFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID taskId = (UUID) getArguments().getSerializable(ARGUMENT_TASK_ID);
-        mRepository = TaskRepository.getInstance();
+        mRepository = TaskDBRepository.getInstance(getActivity());
         mTask = mRepository.getTask(taskId);
         mCalendar = Calendar.getInstance();
 

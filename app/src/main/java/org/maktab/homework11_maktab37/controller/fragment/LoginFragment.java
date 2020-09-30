@@ -21,6 +21,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.activity.SignUpActivity;
 import org.maktab.homework11_maktab37.controller.activity.TaskListActivity;
+import org.maktab.homework11_maktab37.controller.model.User;
+import org.maktab.homework11_maktab37.controller.repository.UserDBRepository;
+
+import java.util.Objects;
 
 public class LoginFragment extends Fragment {
 
@@ -29,16 +33,13 @@ public class LoginFragment extends Fragment {
     private Button mButtonLogin, mButtonSignUp;
     public static final int REQUEST_CODE_SIGN_UP = 0;
     private String user, pass;
-    private ViewGroup mViewGroupRootLayout;
+//    private ViewGroup mViewGroupRootLayout;
 
     private TextInputLayout mUsernameForm;
     private TextInputLayout mPasswordForm;
     private TextInputEditText mUsername;
     private TextInputEditText mPassword;
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+    private UserDBRepository mUserRepository;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -54,7 +55,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mUserRepository = UserDBRepository.getInstance(getActivity());
         if (savedInstanceState != null) {
             user = savedInstanceState.getString(BUNDLE_KEY_USERNAME);
             pass = savedInstanceState.getString(BUNDLE_KEY_PASSWORD);
@@ -118,6 +119,7 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean validateInput() {
+        User user = mUserRepository.getUser(Objects.requireNonNull(mUsername.getText()).toString());
         if (mUsername.getText().toString().trim().isEmpty() && mPassword.getText().toString().trim().isEmpty()) {
             mUsernameForm.setErrorEnabled(true);
             mUsernameForm.setError("Field cannot be empty!");
@@ -132,10 +134,18 @@ public class LoginFragment extends Fragment {
             mPasswordForm.setErrorEnabled(true);
             mPasswordForm.setError("Field cannot be empty!");
             return false;
-        } else if (!mUsername.getText().toString().equals(user) ||
-                !mPassword.getText().toString().equals(pass)) {
+        }
+        if (user == null){
             callToast(R.string.toast_login);
             return false;
+        }else {
+            String inputUsername = user.getUsername();
+            String inputPassword = user.getPassword();
+            if (!mUsername.getText().toString().equals(inputUsername) ||
+                    !mPassword.getText().toString().equals(inputPassword)) {
+                callToast(R.string.toast_login);
+                return false;
+            }
         }
         mUsernameForm.setErrorEnabled(false);
         mPasswordForm.setErrorEnabled(false);
@@ -149,7 +159,7 @@ public class LoginFragment extends Fragment {
         mPasswordForm = view.findViewById(R.id.password_form_login);
         mUsername = view.findViewById(R.id.username_login);
         mPassword = view.findViewById(R.id.password_login);
-        mViewGroupRootLayout = view.findViewById(R.id.rootLayout);
+//        mViewGroupRootLayout = view.findViewById(R.id.rootLayout);
 
     }
 
