@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDBRepository implements IUserRepository {
-    private static UserDBRepository sInstance;
 
+    private static UserDBRepository sInstance;
     private SQLiteDatabase mDatabase;
     private Context mContext;
 

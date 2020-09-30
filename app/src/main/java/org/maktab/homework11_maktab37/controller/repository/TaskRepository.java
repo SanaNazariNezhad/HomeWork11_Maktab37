@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+//............I did not use this class in project any more..................
 
 public class TaskRepository implements IRepository {
 
@@ -27,6 +28,11 @@ public class TaskRepository implements IRepository {
     @Override
     public List<Task> getTasks() {
         return mTasks;
+    }
+
+    @Override
+    public List<Task> searchTasks(String searchValue) {
+        return null;
     }
 
     @Override

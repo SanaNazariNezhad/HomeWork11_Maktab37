@@ -3,23 +3,22 @@ package org.maktab.homework11_maktab37.controller.fragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 
 import org.maktab.homework11_maktab37.R;
-import org.maktab.homework11_maktab37.controller.model.Task;
-import org.maktab.homework11_maktab37.controller.repository.IRepository;
-import org.maktab.homework11_maktab37.controller.repository.TaskRepository;
-
-import java.util.List;
 
 public class TaskListFragment extends Fragment {
 
@@ -47,9 +46,8 @@ public class TaskListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
         mUsername = getArguments().getString(ARG_Username);
-        getActivity().setTitle(mUsername);
-
     }
 
     @Override
@@ -60,6 +58,33 @@ public class TaskListFragment extends Fragment {
         findViews(view);
         initTab();
         return view;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_task_list, menu);
+        updateSubtitle();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        /*switch (item.getItemId()) {
+            case R.id.app_bar_search:
+                String  search = (String) item.getTooltipText();
+                Intent intent = SearchActivity.newIntent(getActivity(),search);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }*/
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateSubtitle() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(mUsername);
     }
 
     private void findViews(View view) {
