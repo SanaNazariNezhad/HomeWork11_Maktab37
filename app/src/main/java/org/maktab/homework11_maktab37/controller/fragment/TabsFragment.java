@@ -49,6 +49,7 @@ public abstract class TabsFragment extends Fragment {
     private FloatingActionButton mActionButtonInsert;
     private FloatingActionButton mActionButtonDelete;
     private FloatingActionButton mActionButtonLogOut;
+    private FloatingActionsMenu mFloatingActionsMenu;
     private boolean isVisible;
 
 
@@ -63,6 +64,7 @@ public abstract class TabsFragment extends Fragment {
         super.onPause();
 
         updateUI();
+        mFloatingActionsMenu.collapse();
     }
 
     @Override
@@ -95,6 +97,8 @@ public abstract class TabsFragment extends Fragment {
         }
     }
 
+    //set offset zero
+
     @Override
     public void onResume() {
         super.onResume();
@@ -125,6 +129,7 @@ public abstract class TabsFragment extends Fragment {
         mActionButtonInsert = view.findViewById(R.id.fab_insert);
         mActionButtonDelete = view.findViewById(R.id.fab_delete);
         mActionButtonLogOut = view.findViewById(R.id.fab_logOut);
+        mFloatingActionsMenu = view.findViewById(R.id.fam);
 
     }
 
@@ -238,13 +243,7 @@ public abstract class TabsFragment extends Fragment {
                     .buildRound(string,color);
             mImageViewProfile.setImageDrawable(drawable);
         }
-        private DateFormat getDateFormat() {
-            return new SimpleDateFormat("MMM dd,yyyy");
-        }
 
-        private DateFormat getTimeFormat() {
-            return new SimpleDateFormat("h:mm a");
-        }
         private String createDateFormat (Task task){
             String totalDate = "";
             DateFormat dateFormat = getDateFormat();
@@ -256,6 +255,14 @@ public abstract class TabsFragment extends Fragment {
             totalDate = date + "  " + time;
 
             return totalDate;
+        }
+
+        private DateFormat getDateFormat() {
+            return new SimpleDateFormat("MMM dd,yyyy");
+        }
+
+        private DateFormat getTimeFormat() {
+            return new SimpleDateFormat("h:mm a");
         }
     }
 
