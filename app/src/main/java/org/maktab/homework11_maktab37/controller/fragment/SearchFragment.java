@@ -95,11 +95,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void search() {
-       /* // Get the intent, verify the action and get the query
-        Intent intent = getActivity().getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);*/
-            mTasks = mRepository.searchTasks(mEditTextSearch.getText().toString());
+       String search = "%" + mEditTextSearch.getText() + "%";
+            mTasks = mRepository.searchTasks(search);
     }
 
     private void updateUI() {

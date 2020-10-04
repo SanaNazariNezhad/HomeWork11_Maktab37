@@ -1,25 +1,47 @@
 package org.maktab.homework11_maktab37.controller.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.UUID;
-
+@Entity(tableName = "taskTable")
 public class Task {
-    private String mTitle;
-    private String mDescription;
-    private Date mDate;
-    private String mState;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private long primaryId;
+
+    @ColumnInfo(name = "uuid")
     private UUID mId;
+
+    @ColumnInfo(name = "title")
+    private String mTitle;
+
+    @ColumnInfo(name = "description")
+    private String mDescription;
+
+    @ColumnInfo(name = "date")
+    private Date mDate;
+
+    @ColumnInfo(name = "state")
+    private String mState;
+
+
+    public long getPrimaryId() {
+        return primaryId;
+    }
+
+    public void setPrimaryId(long primaryId) {
+        this.primaryId = primaryId;
+    }
 
     public UUID getId() {
         return mId;
     }
 
-    public Date getDate() {
-        return mDate;
-    }
-
-    public void setDate(Date date) {
-        mDate = date;
+    public void setId(UUID id) {
+        mId = id;
     }
 
     public String getTitle() {
@@ -30,14 +52,6 @@ public class Task {
         mTitle = title;
     }
 
-    public String getState() {
-        return mState;
-    }
-
-    public void setState(String state) {
-        mState = state;
-    }
-
     public String getDescription() {
         return mDescription;
     }
@@ -46,7 +60,23 @@ public class Task {
         mDescription = description;
     }
 
-    public Task(String title, String description, Date date, String state) {
+    public Date getDate() {
+        return mDate;
+    }
+
+    public void setDate(Date date) {
+        mDate = date;
+    }
+
+    public String getState() {
+        return mState;
+    }
+
+    public void setState(String state) {
+        mState = state;
+    }
+
+    /*public Task(String title, String description, Date date, String state) {
        this(UUID.randomUUID(),title,description,date,state);
     }
 
@@ -56,5 +86,13 @@ public class Task {
         mDate = date;
         mState = state;
         mId = id;
+    }*/
+
+    public Task(String title, String description, Date date, String state) {
+        mId = UUID.randomUUID();
+        mTitle = title;
+        mDescription = description;
+        mDate = date;
+        mState = state;
     }
 }
