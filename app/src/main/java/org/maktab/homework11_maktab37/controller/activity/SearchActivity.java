@@ -12,10 +12,8 @@ import org.maktab.homework11_maktab37.controller.fragment.SearchFragment;
 public class SearchActivity extends SingleFragmentActivity {
 
     public static final String EXTRA_SEARCH_VALUE = "EXTRA_SEARCH_VALUE";
-    private static String mStringSearch;
 
     public static Intent newIntent(Context context,String search) {
-        mStringSearch = search;
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra(EXTRA_SEARCH_VALUE,search);
         return intent;
@@ -23,6 +21,6 @@ public class SearchActivity extends SingleFragmentActivity {
 
     @Override
     public Fragment createFragment() {
-        return SearchFragment.newInstance(mStringSearch);
+        return SearchFragment.newInstance();
     }
 }

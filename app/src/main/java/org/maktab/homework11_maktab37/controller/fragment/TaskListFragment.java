@@ -1,5 +1,6 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import org.maktab.homework11_maktab37.R;
+import org.maktab.homework11_maktab37.controller.activity.SearchActivity;
 
 public class TaskListFragment extends Fragment {
 
@@ -69,7 +71,7 @@ public class TaskListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        /*switch (item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.app_bar_search:
                 String  search = (String) item.getTooltipText();
                 Intent intent = SearchActivity.newIntent(getActivity(),search);
@@ -78,8 +80,7 @@ public class TaskListFragment extends Fragment {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }*/
-        return super.onOptionsItemSelected(item);
+        }
     }
 
     private void updateSubtitle() {
