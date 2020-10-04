@@ -5,10 +5,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
 import org.maktab.homework11_maktab37.controller.model.Task;
 import org.maktab.homework11_maktab37.controller.model.User;
-
 import java.util.List;
 import java.util.UUID;
 

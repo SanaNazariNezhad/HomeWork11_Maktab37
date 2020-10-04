@@ -28,19 +28,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-//TODO....................................
-
 public class SearchFragment extends Fragment {
     public static final String FRAGMENT_TAG_EDIT_TASK = "EditTask";
     public static final int REQUEST_CODE_EDIT_TASK = 0;
-    public static final String ARGS_SEARCH = "ARGS_SEARCH";
     private IRepository mRepository;
     private RecyclerView mRecyclerView;
     private SearchAdapter mAdapter;
     private List<Task> mTasks;
-    private String mSearchString;
     private TextInputEditText mEditTextSearch;
-    private TextInputLayout mTextInputLayoutSearch;
     private ImageView mImageViewSearch;
 
     public SearchFragment() {
@@ -84,7 +79,6 @@ public class SearchFragment extends Fragment {
 
     private void findView(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_search);
-        mTextInputLayoutSearch = view.findViewById(R.id.search_form);
         mEditTextSearch = view.findViewById(R.id.search);
         mImageViewSearch = view.findViewById(R.id.search_img);
     }

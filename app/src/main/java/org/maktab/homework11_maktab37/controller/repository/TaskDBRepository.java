@@ -1,13 +1,10 @@
 package org.maktab.homework11_maktab37.controller.repository;
 
 import android.content.Context;
-
 import androidx.room.Room;
-
 import org.maktab.homework11_maktab37.controller.database.TaskDatabase;
 import org.maktab.homework11_maktab37.controller.database.TaskDatabaseDAO;
 import org.maktab.homework11_maktab37.controller.model.Task;
-
 import java.util.List;
 import java.util.UUID;
 
