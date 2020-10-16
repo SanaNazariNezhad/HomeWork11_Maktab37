@@ -12,10 +12,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/delete_massage"
         android:padding="8dp"
-        android:textStyle="bold|italic"
-        android:textSize="28sp"
+        style="@style/TextAppearance.AppCompat.Title.Inverse"
         android:layout_gravity="center"
-        android:textColor="#000000"
+        android:textColor="@color/warning"
         android:text="@string/delete_all_question" />
 
 </FrameLayout>

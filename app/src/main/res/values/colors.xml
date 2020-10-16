@@ -7,4 +7,5 @@
     <color name="circleImage">#ff80aa</color>
     <color name="background_task_row">#ffebee</color>
     <color name="fab">#ffc7b3</color>
+    <color name="warning">#9C0B20</color>
 </resources>
