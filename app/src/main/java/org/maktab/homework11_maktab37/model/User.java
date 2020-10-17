@@ -1,4 +1,4 @@
-package org.maktab.homework11_maktab37.controller.model;
+package org.maktab.homework11_maktab37.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
