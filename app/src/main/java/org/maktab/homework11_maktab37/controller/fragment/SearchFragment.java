@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.maktab.homework11_maktab37.R;
-import org.maktab.homework11_maktab37.controller.model.Task;
+import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.repository.IRepository;
 import org.maktab.homework11_maktab37.repository.TaskDBRepository;
 
