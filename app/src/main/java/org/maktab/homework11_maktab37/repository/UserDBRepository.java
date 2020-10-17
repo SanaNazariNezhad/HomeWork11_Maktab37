@@ -1,4 +1,4 @@
-package org.maktab.homework11_maktab37.controller.repository;
+package org.maktab.homework11_maktab37.repository;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import androidx.room.Room;
 import org.maktab.homework11_maktab37.controller.database.TaskDatabase;
 import org.maktab.homework11_maktab37.controller.database.TaskDatabaseDAO;
 import org.maktab.homework11_maktab37.controller.model.User;
+import org.maktab.homework11_maktab37.controller.repository.IUserRepository;
 
 import java.util.List;
 

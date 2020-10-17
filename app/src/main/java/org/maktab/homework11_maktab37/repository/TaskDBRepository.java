@@ -1,4 +1,4 @@
-package org.maktab.homework11_maktab37.controller.repository;
+package org.maktab.homework11_maktab37.repository;
 
 import android.content.Context;
 import androidx.room.Room;

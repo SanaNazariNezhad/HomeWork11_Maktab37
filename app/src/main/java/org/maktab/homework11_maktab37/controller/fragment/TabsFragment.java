@@ -25,8 +25,8 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.model.Task;
-import org.maktab.homework11_maktab37.controller.repository.IRepository;
-import org.maktab.homework11_maktab37.controller.repository.TaskDBRepository;
+import org.maktab.homework11_maktab37.repository.IRepository;
+import org.maktab.homework11_maktab37.repository.TaskDBRepository;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -92,33 +92,6 @@ public abstract class TabsFragment extends Fragment {
 
         if (requestCode == REQUEST_CODE_INSERT_TASK || requestCode == REQUEST_CODE_EDIT_TASK) {
             updateUI();
-
-        }
-    }
-
-    //set offset zero
-//TODO.........................................
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint() && !isVisible) {
-            //your code
-        }
-        isVisible = true;
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser && isVisible) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //your code
-                }
-            }, 500);
 
         }
     }
@@ -202,6 +175,33 @@ public abstract class TabsFragment extends Fragment {
             mLayoutEmpty.setVisibility(View.VISIBLE);
         else
             mLayoutEmpty.setVisibility(View.GONE);
+    }
+
+    //set offset zero
+//TODO.........................................
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint() && !isVisible) {
+            //your code
+        }
+        isVisible = true;
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isVisible) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //your code
+                }
+            }, 500);
+
+        }
     }
 
     private class TabsHolder extends RecyclerView.ViewHolder {
