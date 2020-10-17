@@ -4,7 +4,7 @@ import android.content.Context;
 import androidx.room.Room;
 import org.maktab.homework11_maktab37.database.TaskDatabase;
 import org.maktab.homework11_maktab37.database.TaskDatabaseDAO;
-import org.maktab.homework11_maktab37.controller.model.Task;
+import org.maktab.homework11_maktab37.model.Task;
 import java.util.List;
 import java.util.UUID;
 
