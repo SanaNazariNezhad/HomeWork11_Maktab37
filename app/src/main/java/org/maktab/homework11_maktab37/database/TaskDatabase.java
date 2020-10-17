@@ -1,4 +1,4 @@
-package org.maktab.homework11_maktab37.controller.database;
+package org.maktab.homework11_maktab37.database;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
