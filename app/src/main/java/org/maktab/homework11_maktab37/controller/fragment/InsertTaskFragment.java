@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.maktab.homework11_maktab37.R;
-import org.maktab.homework11_maktab37.controller.model.Task;
+import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.repository.IRepository;
 import org.maktab.homework11_maktab37.repository.TaskDBRepository;
 
@@ -33,8 +33,6 @@ import java.util.Date;
 
 public class InsertTaskFragment extends DialogFragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     public static final String EXTRA_USER_SELECTED_DATE = "org.maktab.homework11_maktab37.userSelectedTask";
     public static final String FRAGMENT_TAG_DATE_PICKER = "DatePicker";
     public static final int REQUEST_CODE_DATE_PICKER = 0;

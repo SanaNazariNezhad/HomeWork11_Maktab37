@@ -1,6 +1,6 @@
-package org.maktab.homework11_maktab37.controller.repository;
+package org.maktab.homework11_maktab37.repository;
 
-import org.maktab.homework11_maktab37.controller.model.User;
+import org.maktab.homework11_maktab37.model.User;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.maktab.homework11_maktab37.R;
-import org.maktab.homework11_maktab37.controller.model.Task;
+import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.repository.IRepository;
 import org.maktab.homework11_maktab37.repository.TaskDBRepository;
 

@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.activity.SignUpActivity;
 import org.maktab.homework11_maktab37.controller.activity.TaskListActivity;
-import org.maktab.homework11_maktab37.controller.model.User;
+import org.maktab.homework11_maktab37.model.User;
 import org.maktab.homework11_maktab37.repository.UserDBRepository;
 
 import java.util.Objects;

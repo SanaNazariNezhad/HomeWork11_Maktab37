@@ -4,10 +4,10 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import org.maktab.homework11_maktab37.controller.database.TaskDatabase;
-import org.maktab.homework11_maktab37.controller.database.TaskDatabaseDAO;
-import org.maktab.homework11_maktab37.controller.model.User;
-import org.maktab.homework11_maktab37.controller.repository.IUserRepository;
+import org.maktab.homework11_maktab37.database.TaskDatabase;
+import org.maktab.homework11_maktab37.database.TaskDatabaseDAO;
+import org.maktab.homework11_maktab37.model.User;
+import org.maktab.homework11_maktab37.repository.IUserRepository;
 
 import java.util.List;
 
