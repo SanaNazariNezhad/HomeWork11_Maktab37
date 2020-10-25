@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controller.fragment.EditTaskFragment">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:padding="5dp"
-        android:hint="@string/title">
+        android:hint="@string/title"
+        android:padding="5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/title_edit"
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_form_edit"
-        android:padding="5dp"
-        android:hint="@string/description">
+        android:hint="@string/description"
+        android:padding="5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/description_edit"
@@ -42,72 +42,96 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
+        android:id="@+id/layout_pickerBtn_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/layout_pickerBtn_edit"
-        android:padding="5dp"
         android:layout_below="@id/description_form_edit"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-    <Button
-        android:id="@+id/btn_date_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginEnd="2dp"
-        android:text="@string/date" />
+        <Button
+            android:id="@+id/btn_date_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:text="@string/date" />
 
-    <Button
-        android:id="@+id/btn_time_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="2dp"
-        android:text="@string/time" />
+        <Button
+            android:id="@+id/btn_time_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:text="@string/time" />
 
     </LinearLayout>
 
-    <RadioGroup
+    <LinearLayout
+        android:id="@+id/radio_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_pickerBtn_edit"
-        android:id="@+id/radioGroup_edit"
-        android:gravity="center"
         android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/radioBtn_todo_edit"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:layout_below="@id/layout_pickerBtn_edit"
+        android:orientation="horizontal">
+        <RadioGroup
+            android:id="@+id/radioGroup_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/todo" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/radioBtn_doing_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/doing" />
+            <RadioButton
+                android:id="@+id/radioBtn_todo_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todo" />
 
-        <RadioButton
-            android:id="@+id/radioBtn_done_edit"
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/radioBtn_doing_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/doing" />
+
+            <RadioButton
+                android:id="@+id/radioBtn_done_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done" />
+        </RadioGroup>
+    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/share"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/done" />
-    </RadioGroup>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/ic_share" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_below="@id/radioGroup_edit"
-        android:orientation="horizontal">
+        android:layout_below="@id/radio_layout"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/btn_delete_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="2dp"
+            android:layout_weight="1"
             android:text="@string/delete"
             android:textAllCaps="false" />
 
@@ -115,9 +139,9 @@
             android:id="@+id/btn_edit_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
+            android:layout_weight="1"
             android:text="@string/edit"
             android:textAllCaps="false" />
 
@@ -125,9 +149,9 @@
             android:id="@+id/btn_save_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
+            android:layout_weight="1"
             android:text="@string/save"
             android:textAllCaps="false" />
     </LinearLayout>
