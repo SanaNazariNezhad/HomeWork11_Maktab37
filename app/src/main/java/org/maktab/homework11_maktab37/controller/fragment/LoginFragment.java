@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.maktab.homework11_maktab37.controller.activity.AdminActivity;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.activity.SignUpActivity;
 import org.maktab.homework11_maktab37.controller.activity.TaskListActivity;
@@ -30,7 +30,7 @@ public class LoginFragment extends Fragment {
 
     public static final String BUNDLE_KEY_USERNAME = "UserBundle";
     public static final String BUNDLE_KEY_PASSWORD = "passBundle";
-    private Button mButtonLogin, mButtonSignUp;
+    private Button mButtonLogin, mButtonSignUp,mButtonAdmin;
     public static final int REQUEST_CODE_SIGN_UP = 0;
     private String user, pass;
 //    private ViewGroup mViewGroupRootLayout;
@@ -103,8 +103,6 @@ public class LoginFragment extends Fragment {
                     Intent intent = TaskListActivity.newIntent(getActivity(), mUsername.getText().toString());
                     startActivity(intent);
                 }
-
-
             }
         });
         mButtonSignUp.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +113,26 @@ public class LoginFragment extends Fragment {
 
             }
         });
+        mButtonAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkAdmin()){
+                    Intent intent = AdminActivity.newIntent(getActivity());
+                    startActivity(intent);
+                }
 
+            }
+        });
+
+    }
+
+    private boolean checkAdmin() {
+        if (mUsername.getText().toString().equalsIgnoreCase("Admin") && mPassword.getText().toString().equals("1234"))
+            return true;
+        else{
+            callToast(R.string.toast_admin);
+            return false;
+        }
     }
 
     private boolean validateInput() {
@@ -159,8 +176,7 @@ public class LoginFragment extends Fragment {
         mPasswordForm = view.findViewById(R.id.password_form_login);
         mUsername = view.findViewById(R.id.username_login);
         mPassword = view.findViewById(R.id.password_login);
-//        mViewGroupRootLayout = view.findViewById(R.id.rootLayout);
-
+        mButtonAdmin = view.findViewById(R.id.btn_admin_login);
     }
 
     private void callToast(int stringId) {
