@@ -1,8 +1,15 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputEditText;
@@ -21,10 +29,13 @@ import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.repository.IRepository;
 import org.maktab.homework11_maktab37.repository.TaskDBRepository;
+
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class EditTaskFragment extends DialogFragment {
@@ -33,6 +44,9 @@ public class EditTaskFragment extends DialogFragment {
     public static final int REQUEST_CODE_DATE_PICKER = 0;
     public static final String FRAGMENT_TAG_TIME_PICKER = "TimePicker";
     public static final int REQUEST_CODE_TIME_PICKER = 1;
+    private static final int REQUEST_CODE_IMAGE_CAPTURE = 2;
+    public static final String TAG = "ETF";
+    public static final String AUTHORITY = "org.maktab.homework11_maktab37.fileProvider";
     public static final String BUNDLE_KEY_DATE = "BUNDLE_KEY_DATE";
     public static final String BUNDLE_KEY_TIME = "BUNDLE_KEY_TIME";
     public static final String ARGUMENT_TASK_ID = "Bundle_key_TaskId";
@@ -49,7 +63,8 @@ public class EditTaskFragment extends DialogFragment {
     private String mDate, mTime;
     private boolean mFlag;
     private String mState;
-    private ImageView mImageViewShare;
+    private ImageView mImageViewShare,mImageViewTaskPicture,mImageViewTakePicture;
+    private File mPhotoFile;
 
     public EditTaskFragment() {
         // Required empty public constructor
@@ -71,6 +86,7 @@ public class EditTaskFragment extends DialogFragment {
         mRepository = TaskDBRepository.getInstance(getActivity());
         mTask = mRepository.getTask(taskId);
         mCalendar = Calendar.getInstance();
+        mPhotoFile = mRepository.getPhotoFile(mTask);
 
     }
 
@@ -85,6 +101,7 @@ public class EditTaskFragment extends DialogFragment {
         }
         setData(mTask);
         listeners();
+        updatePhotoView();
         return view;
     }
 
@@ -109,6 +126,11 @@ public class EditTaskFragment extends DialogFragment {
             Calendar userSelectedTime =
                     (Calendar) data.getSerializableExtra(TimePickerFragment.EXTRA_USER_SELECTED_TIME);
             updateTaskTime(userSelectedTime.getTime());
+        }else if (requestCode == REQUEST_CODE_IMAGE_CAPTURE) {
+            Uri photoUri = generateUriForPhotoFile();
+            getActivity().revokeUriPermission(photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            updatePhotoView();
         }
     }
 
@@ -126,6 +148,8 @@ public class EditTaskFragment extends DialogFragment {
         mDoing = view.findViewById(R.id.radioBtn_doing_edit);
         mDone = view.findViewById(R.id.radioBtn_done_edit);
         mImageViewShare = view.findViewById(R.id.share);
+        mImageViewTaskPicture = view.findViewById(R.id.task_picture);
+        mImageViewTakePicture = view.findViewById(R.id.btn_picture);
     }
 
     private void setData(Task task){
@@ -154,6 +178,7 @@ public class EditTaskFragment extends DialogFragment {
         mTodo.setEnabled(false);
         mDoing.setEnabled(false);
         mDone.setEnabled(false);
+        mImageViewTakePicture.setEnabled(false);
     }
 
     private void listeners() {
@@ -167,6 +192,7 @@ public class EditTaskFragment extends DialogFragment {
                 mTodo.setEnabled(true);
                 mDoing.setEnabled(true);
                 mDone.setEnabled(true);
+                mImageViewTakePicture.setEnabled(true);
             }
         });
         mButtonSave.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +257,62 @@ public class EditTaskFragment extends DialogFragment {
                 shareIntent();
             }
         });
+        mImageViewTakePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePictureIntent();
+            }
+        });
+    }
+
+    private void takePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            if (mPhotoFile != null && takePictureIntent
+                    .resolveActivity(getActivity().getPackageManager()) != null) {
+
+                // file:///data/data/com.example.ci/files/234234234234.jpg
+                Uri photoUri = generateUriForPhotoFile();
+
+                grantWriteUriToAllResolvedActivities(takePictureIntent, photoUri);
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, REQUEST_CODE_IMAGE_CAPTURE);
+            }
+        } catch (ActivityNotFoundException e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+    }
+
+    private void grantWriteUriToAllResolvedActivities(Intent takePictureIntent, Uri photoUri) {
+        List<ResolveInfo> activities = getActivity().getPackageManager()
+                .queryIntentActivities(
+                        takePictureIntent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+
+        for (ResolveInfo activity: activities) {
+            getActivity().grantUriPermission(
+                    activity.activityInfo.packageName,
+                    photoUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+    }
+
+    private Uri generateUriForPhotoFile() {
+        return FileProvider.getUriForFile(
+                getContext(),
+                AUTHORITY,
+                mPhotoFile);
+    }
+
+    private void updatePhotoView() {
+        if (mPhotoFile == null || !mPhotoFile.exists())
+            return;
+
+
+        //this has a better memory management.
+        Bitmap bitmap = org.maktab.homework11_maktab37.utils.PictureUtils.getScaledBitmap(mPhotoFile.getAbsolutePath(), getActivity());
+        mImageViewTaskPicture.setImageBitmap(bitmap);
     }
 
     private void shareIntent() {

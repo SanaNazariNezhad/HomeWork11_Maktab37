@@ -76,23 +76,15 @@ public class Task {
         mState = state;
     }
 
-    /*public Task(String title, String description, Date date, String state) {
-       this(UUID.randomUUID(),title,description,date,state);
-    }
-
-    public Task(UUID id,String title, String description, Date date, String state) {
-        mTitle = title;
-        mDescription = description;
-        mDate = date;
-        mState = state;
-        mId = id;
-    }*/
-
     public Task(String title, String description, Date date, String state) {
         mId = UUID.randomUUID();
         mTitle = title;
         mDescription = description;
         mDate = date;
         mState = state;
+    }
+
+    public String getPhotoFileName() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }
