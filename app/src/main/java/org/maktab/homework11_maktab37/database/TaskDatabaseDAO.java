@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.model.User;
@@ -54,6 +55,10 @@ public interface TaskDatabaseDAO {
 
     @Query("SELECT * FROM userTable WHERE  username=:name")
     User getUser(String name);
+
+    @Transaction
+    @Query("SELECT * FROM userTable")
+    public List<UserWithTask> getUsersWithTasks();
 
 
 

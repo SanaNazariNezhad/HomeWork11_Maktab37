@@ -27,6 +27,8 @@ public class Task {
     @ColumnInfo(name = "state")
     private String mState;
 
+    private long userId;
+
 
     public long getPrimaryId() {
         return primaryId;
