@@ -56,10 +56,4 @@ public interface TaskDatabaseDAO {
     @Query("SELECT * FROM userTable WHERE  username=:name")
     User getUser(String name);
 
-    @Transaction
-    @Query("SELECT * FROM userTable")
-    public List<UserWithTask> getUsersWithTasks();
-
-
-
 }
