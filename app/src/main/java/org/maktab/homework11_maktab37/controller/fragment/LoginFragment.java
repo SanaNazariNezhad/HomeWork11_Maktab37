@@ -40,6 +40,7 @@ public class LoginFragment extends Fragment {
     private TextInputEditText mUsername;
     private TextInputEditText mPassword;
     private UserDBRepository mUserRepository;
+    private User mUser;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -100,6 +101,8 @@ public class LoginFragment extends Fragment {
                 mUsernameForm.setErrorEnabled(false);
                 mPasswordForm.setErrorEnabled(false);
                 if (validateInput()) {
+                    //todo.................
+                    //send user against username
                     Intent intent = TaskListActivity.newIntent(getActivity(), mUsername.getText().toString());
                     startActivity(intent);
                 }
