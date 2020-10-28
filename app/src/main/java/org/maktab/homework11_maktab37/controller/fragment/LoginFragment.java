@@ -103,7 +103,7 @@ public class LoginFragment extends Fragment {
                 if (validateInput()) {
                     //todo.................
                     //send user against username
-                    Intent intent = TaskListActivity.newIntent(getActivity(), mUsername.getText().toString());
+                    Intent intent = TaskListActivity.newIntent(getActivity(), mUsername.getText().toString(),mPassword.getText().toString());
                     startActivity(intent);
                 }
             }
@@ -139,7 +139,7 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean validateInput() {
-        User user = mUserRepository.getUser(Objects.requireNonNull(mUsername.getText()).toString());
+        User user = mUserRepository.getUser(Objects.requireNonNull(mUsername.getText()).toString(),mPassword.getText().toString());
         if (mUsername.getText().toString().trim().isEmpty() && mPassword.getText().toString().trim().isEmpty()) {
             mUsernameForm.setErrorEnabled(true);
             mUsernameForm.setError("Field cannot be empty!");

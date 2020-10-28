@@ -25,7 +25,8 @@ import org.maktab.homework11_maktab37.controller.activity.SearchActivity;
 public class TaskListFragment extends Fragment {
 
     private static final String ARG_Username = "username";
-    private String mUsername;
+    private static final String ARG_Password = "password";
+    private String mUsername,mPassword;
 
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager;
@@ -36,10 +37,11 @@ public class TaskListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TaskListFragment newInstance(String username) {
+    public static TaskListFragment newInstance(String username,String password) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_Username, username);
+        args.putString(ARG_Password, password);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,6 +52,7 @@ public class TaskListFragment extends Fragment {
 
         setHasOptionsMenu(true);
         mUsername = getArguments().getString(ARG_Username);
+        mPassword = getArguments().getString(ARG_Password);
     }
 
     @Override
@@ -143,13 +146,13 @@ public class TaskListFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    TabsFragment todoFragment = TabsFragment.newInstance(mUsername,"todo");
+                    TabsFragment todoFragment = TabsFragment.newInstance(mUsername,mPassword,"todo");
                     return todoFragment;
                 case 1:
-                    TabsFragment doingFragment = TabsFragment.newInstance(mUsername,"doing");
+                    TabsFragment doingFragment = TabsFragment.newInstance(mUsername,mPassword,"doing");
                     return doingFragment;
                 case 2:
-                    TabsFragment doneFragment = TabsFragment.newInstance(mUsername,"done");
+                    TabsFragment doneFragment = TabsFragment.newInstance(mUsername,mPassword,"done");
                     return doneFragment;
                 default:
                     return null;

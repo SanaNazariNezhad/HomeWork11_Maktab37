@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import org.maktab.homework11_maktab37.database.TaskDatabase;
 import org.maktab.homework11_maktab37.database.TaskDatabaseDAO;
+import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.model.User;
 import org.maktab.homework11_maktab37.repository.IUserRepository;
 
@@ -34,19 +35,41 @@ public class UserDBRepository implements IUserRepository {
 
         mTaskDAO = taskDatabase.getTaskDatabaseDAO();
     }
+
     @Override
     public List<User> getUsers() {
         return mTaskDAO.getUsers();
     }
 
     @Override
-    public User getUser(String username) {
-        return mTaskDAO.getUser(username);
+    public User getUser(String username,String password) {
+        return mTaskDAO.getUser(username,password);
     }
 
     @Override
     public void insertUser(User user) {
         mTaskDAO.insertUser(user);
     }
+
+    @Override
+    public void deleteUser(User user) {
+        mTaskDAO.deleteUser(user);
+    }
+
+    @Override
+    public void deleteUserTasks(long userId) {
+        mTaskDAO.deleteUserTasks(userId);
+    }
+
+    @Override
+    public List<Task> getUserTasks(long userId) {
+        return mTaskDAO.getUserTasks(userId);
+    }
+
+    @Override
+    public int numberOfTask(long userId) {
+        return mTaskDAO.numberOfTask(userId);
+    }
+
 
 }

@@ -27,7 +27,16 @@ public class Task {
     @ColumnInfo(name = "state")
     private String mState;
 
-//    @ColumnInfo(name = "user_id_fk")
+    @ColumnInfo(name = "user_id_fk")
+    private long userIdFk;
+
+    public long getUserIdFk() {
+        return userIdFk;
+    }
+
+    public void setUserIdFk(long userIdFk) {
+        this.userIdFk = userIdFk;
+    }
 
     public long getPrimaryId() {
         return primaryId;

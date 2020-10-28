@@ -57,6 +57,11 @@ public class TaskDBRepository implements IRepository {
     }
 
     @Override
+    public void insertTasks(List<Task> tasks) {
+        mTaskDAO.insertTasks(tasks);
+    }
+
+    @Override
     public void updateTask(Task task) {
         mTaskDAO.updateTask(task);
     }
@@ -72,18 +77,18 @@ public class TaskDBRepository implements IRepository {
     }
 
     @Override
-    public List<Task> getTodoTask() {
-        return mTaskDAO.getTodoTask();
+    public List<Task> getTodoTask(long userId) {
+        return mTaskDAO.getTodoTask(userId);
     }
 
     @Override
-    public List<Task> getDoingTask() {
-        return mTaskDAO.getDoingTask();
+    public List<Task> getDoingTask(long userId) {
+        return mTaskDAO.getDoingTask(userId);
     }
 
     @Override
-    public List<Task> getDoneTask() {
-        return mTaskDAO.getDoneTask();
+    public List<Task> getDoneTask(long userId) {
+        return mTaskDAO.getDoneTask(userId);
     }
 
     @Override
