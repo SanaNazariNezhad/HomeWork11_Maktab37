@@ -26,34 +26,34 @@ public interface TaskDatabaseDAO {
     @Delete
     void deleteTask(Task task);
 
-    @Query("DELETE FROM taskTable")
+    @Query("DELETE FROM task")
     void deleteAllTask();
 
-    @Query("SELECT * FROM taskTable")
+    @Query("SELECT * FROM task")
     List<Task> getTasks();
 
-    @Query("SELECT * FROM taskTable WHERE state ='Todo'")
+    @Query("SELECT * FROM task WHERE state ='Todo'")
     List<Task> getTodoTask();
 
-    @Query("SELECT * FROM taskTable WHERE state ='Doing'")
+    @Query("SELECT * FROM task WHERE state ='Doing'")
     List<Task> getDoingTask();
 
-    @Query("SELECT * FROM taskTable WHERE state ='Done'")
+    @Query("SELECT * FROM task WHERE state ='Done'")
     List<Task> getDoneTask();
 
-    @Query("SELECT * FROM taskTable WHERE uuid =:inputUUID")
+    @Query("SELECT * FROM task WHERE uuid =:inputUUID")
     Task getTask(UUID inputUUID);
 
-    @Query("SELECT * FROM taskTable WHERE title LIKE :searchValue OR description LIKE :searchValue OR date LIKE :searchValue")
+    @Query("SELECT * FROM task WHERE title LIKE :searchValue OR description LIKE :searchValue OR date LIKE :searchValue")
     List<Task> searchTasks(String searchValue);
 
     @Insert
     void insertUser(User user);
 
-    @Query("SELECT * FROM userTable")
+    @Query("SELECT * FROM user")
     List<User> getUsers();
 
-    @Query("SELECT * FROM userTable WHERE  username=:name")
+    @Query("SELECT * FROM user WHERE  username=:name")
     User getUser(String name);
 
 }

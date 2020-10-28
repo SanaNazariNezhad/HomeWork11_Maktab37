@@ -25,14 +25,18 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.model.Task;
+import org.maktab.homework11_maktab37.model.User;
 import org.maktab.homework11_maktab37.repository.IRepository;
+import org.maktab.homework11_maktab37.repository.IUserRepository;
 import org.maktab.homework11_maktab37.repository.TaskDBRepository;
+import org.maktab.homework11_maktab37.repository.UserDBRepository;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
-public abstract class TabsFragment extends Fragment {
+public class TabsFragment extends Fragment {
 
     public static final String FRAGMENT_TAG_INSERT_TASK = "InsertTask";
     public static final int REQUEST_CODE_INSERT_TASK = 0;
@@ -40,9 +44,12 @@ public abstract class TabsFragment extends Fragment {
     public static final int REQUEST_CODE_EDIT_TASK = 1;
     public static final String FRAGMENT_TAG_DELETE_ALL_TASK = "DeleteAllTask";
     public static final int REQUEST_CODE_DELETE_ALL_TASK = 2;
+    public static final String KEY_VALUE_STATE = "Key_Value_State";
+    public static final String KEY_VALUE_USERNAME = "KEY_VALUE_Username";
     private RecyclerView mRecyclerView;
     private TabsAdapter mAdapter;
     private IRepository mRepository;
+    private IUserRepository mIUserRepository;
     private List<Task> mTasks;
     private RelativeLayout mLayoutEmpty;
     private FloatingActionButton mActionButtonInsert;
@@ -50,13 +57,25 @@ public abstract class TabsFragment extends Fragment {
     private FloatingActionButton mActionButtonLogOut;
     private FloatingActionsMenu mFloatingActionsMenu;
     private boolean isVisible;
+    private String mState,mUsername;
+    private User mUser;
 
 
     public TabsFragment() {
         // Required empty public constructor
     }
 
-    public abstract Fragment createFragment();
+//    public abstract Fragment createFragment();
+
+    public static TabsFragment newInstance(String username,String state) {
+
+        Bundle args = new Bundle();
+        args.putString(KEY_VALUE_STATE,state);
+        args.putString(KEY_VALUE_USERNAME,username);
+        TabsFragment fragment = new TabsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onPause() {
@@ -71,6 +90,10 @@ public abstract class TabsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mRepository = TaskDBRepository.getInstance(getActivity());
+        mIUserRepository = UserDBRepository.getInstance(getActivity());
+        mState = getArguments().getString(KEY_VALUE_STATE);
+        mUsername = getArguments().getString(KEY_VALUE_USERNAME);
+        mUser = mIUserRepository.getUser(Objects.requireNonNull(mUsername));
     }
 
     @Override
@@ -164,11 +187,11 @@ public abstract class TabsFragment extends Fragment {
     }
 
     private void checkEmptyLayout() {
-        if (createFragment() instanceof TodoFragment)
+        if (mState.equalsIgnoreCase("todo"))
             mTasks = mRepository.getTodoTask();
-        else if (createFragment() instanceof DoingFragment)
+        else if (mState.equalsIgnoreCase("doing"))
             mTasks = mRepository.getDoingTask();
-        else if (createFragment() instanceof DoneFragment)
+        else if (mState.equalsIgnoreCase("done"))
             mTasks = mRepository.getDoneTask();
 
         if (mTasks.size()==0)

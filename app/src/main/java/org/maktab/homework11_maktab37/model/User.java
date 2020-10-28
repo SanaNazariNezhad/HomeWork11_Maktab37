@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "userTable")
+@Entity(tableName = "user")
 public class User {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "user_id")
     private long primaryId;
 
     @ColumnInfo(name = "username")

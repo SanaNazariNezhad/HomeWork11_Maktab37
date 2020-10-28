@@ -22,9 +22,6 @@
         <activity
             android:name=".controller.activity.SearchActivity"
             android:parentActivityName=".controller.activity.TaskListActivity" />
-        <activity android:name=".controller.activity.DoneActivity" />
-        <activity android:name=".controller.activity.DoingActivity" />
-        <activity android:name=".controller.activity.TodoActivity" />
         <activity android:name=".controller.activity.TaskListActivity" />
         <activity android:name=".controller.activity.SignUpActivity" />
         <activity android:name=".controller.activity.LoginActivity">
