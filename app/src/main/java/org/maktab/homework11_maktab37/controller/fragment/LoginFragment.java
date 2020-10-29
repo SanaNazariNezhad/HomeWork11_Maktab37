@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.maktab.homework11_maktab37.controller.activity.AdminActivity;
+import org.maktab.homework11_maktab37.controller.activity.AdminListActivity;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.activity.SignUpActivity;
 import org.maktab.homework11_maktab37.controller.activity.TaskListActivity;
@@ -120,7 +120,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (checkAdmin()){
-                    Intent intent = AdminActivity.newIntent(getActivity());
+                    Intent intent = AdminListActivity.newIntent(getActivity());
                     startActivity(intent);
                 }
 

@@ -1,5 +1,6 @@
 package org.maktab.homework11_maktab37.controller.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.maktab.homework11_maktab37.AdminDetailActivity;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.model.User;
@@ -27,7 +29,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class AdminFragment extends Fragment {
+public class AdminListFragment extends Fragment {
+    public static final int REQUEST_CODE_USER_TASK_DETAIL = 0;
     private RecyclerView mRecyclerView;
     private UserAdapter mAdapter;
     private List<User> mUsers;
@@ -37,12 +40,12 @@ public class AdminFragment extends Fragment {
     private IRepository mIRepository;
     private RelativeLayout mRelativeLayout;
 
-    public AdminFragment() {
+    public AdminListFragment() {
         // Required empty public constructor
     }
 
-    public static AdminFragment newInstance() {
-        AdminFragment fragment = new AdminFragment();
+    public static AdminListFragment newInstance() {
+        AdminListFragment fragment = new AdminListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -61,7 +64,7 @@ public class AdminFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_list, container, false);
         findView(view);
         initView();
         return view;
@@ -134,15 +137,24 @@ public class AdminFragment extends Fragment {
         private TextView mTextViewUserName;
         private TextView mTextViewRegistry;
         private TextView mTextViewNumberOfTasks;
+        private User mUser;
 
         public UserHolder(@NonNull View itemView) {
             super(itemView);
             mTextViewUserName = itemView.findViewById(R.id.user_name);
             mTextViewRegistry = itemView.findViewById(R.id.registry_date);
             mTextViewNumberOfTasks = itemView.findViewById(R.id.number_of_tasks);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = AdminDetailActivity.newIntent(getActivity(),mUser.getPrimaryId());
+                    startActivity(intent);
+                }
+            });
         }
 
         public void bindUserDetail(User user){
+            mUser = user;
             DateFormat dateFormat = getDateFormat();
             String date = dateFormat.format(user.getDate());
             mTextViewUserName.setText(user.getUsername());

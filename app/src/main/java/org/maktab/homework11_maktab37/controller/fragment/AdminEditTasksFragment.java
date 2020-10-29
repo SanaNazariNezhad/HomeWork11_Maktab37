@@ -8,6 +8,13 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,14 +24,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ShareCompat;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.repository.IRepository;
@@ -38,7 +41,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class EditTaskFragment extends DialogFragment {
+public class AdminEditTasksFragment extends DialogFragment {
+    public static final String ARGUMENT_TASK_ID = "Bundle_key_TaskId";
 
     public static final String FRAGMENT_TAG_DATE_PICKER = "DatePicker";
     public static final int REQUEST_CODE_DATE_PICKER = 0;
@@ -49,7 +53,6 @@ public class EditTaskFragment extends DialogFragment {
     public static final String AUTHORITY = "org.maktab.homework11_maktab37.fileProvider";
     public static final String BUNDLE_KEY_DATE = "BUNDLE_KEY_DATE";
     public static final String BUNDLE_KEY_TIME = "BUNDLE_KEY_TIME";
-    public static final String ARGUMENT_TASK_ID = "Bundle_key_TaskId";
 
     private Button mButtonSave, mButtonDelete, mButtonEdit, mButtonDate, mButtonTime;
     private RadioButton mTodo, mDoing, mDone;
@@ -63,18 +66,17 @@ public class EditTaskFragment extends DialogFragment {
     private String mDate, mTime;
     private boolean mFlag;
     private String mState;
-    private ImageView mImageViewShare,mImageViewTaskPicture,mImageViewTakePicture;
+    private ImageView mImageViewTaskPicture,mImageViewTakePicture;
     private File mPhotoFile;
 
-    public EditTaskFragment() {
+    public AdminEditTasksFragment() {
         // Required empty public constructor
     }
 
-    public static EditTaskFragment newInstance(UUID taskId) {
-
+    public static AdminEditTasksFragment newInstance(UUID taskId) {
+        AdminEditTasksFragment fragment = new AdminEditTasksFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARGUMENT_TASK_ID,taskId);
-        EditTaskFragment fragment = new EditTaskFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,6 +85,7 @@ public class EditTaskFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID taskId = (UUID) getArguments().getSerializable(ARGUMENT_TASK_ID);
+//....
         mRepository = TaskDBRepository.getInstance(getActivity());
         mTask = mRepository.getTask(taskId);
         mCalendar = Calendar.getInstance();
@@ -90,10 +93,11 @@ public class EditTaskFragment extends DialogFragment {
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_admin_edit_tasks, container, false);
         findViews(view);
         if (mFlag) {
             mButtonDate.setText(mDate);
@@ -135,21 +139,20 @@ public class EditTaskFragment extends DialogFragment {
     }
 
     private void findViews(View view) {
-        mTitleForm = view.findViewById(R.id.title_form_edit);
-        mTitle = view.findViewById(R.id.title_edit);
-        mDescriptionForm = view.findViewById(R.id.description_form_edit);
-        mDescription = view.findViewById(R.id.description_edit);
-        mButtonDate = view.findViewById(R.id.btn_date_edit);
-        mButtonTime = view.findViewById(R.id.btn_time_edit);
-        mButtonSave = view.findViewById(R.id.btn_save_edit);
-        mButtonDelete = view.findViewById(R.id.btn_delete_edit);
-        mButtonEdit = view.findViewById(R.id.btn_edit_edit);
-        mTodo = view.findViewById(R.id.radioBtn_todo_edit);
-        mDoing = view.findViewById(R.id.radioBtn_doing_edit);
-        mDone = view.findViewById(R.id.radioBtn_done_edit);
-        mImageViewShare = view.findViewById(R.id.share);
-        mImageViewTaskPicture = view.findViewById(R.id.task_picture);
-        mImageViewTakePicture = view.findViewById(R.id.btn_picture);
+        mTitleForm = view.findViewById(R.id.title_form_edit_admin);
+        mTitle = view.findViewById(R.id.title_edit_admin);
+        mDescriptionForm = view.findViewById(R.id.description_form_edit_admin);
+        mDescription = view.findViewById(R.id.description_edit_admin);
+        mButtonDate = view.findViewById(R.id.btn_date_edit_admin);
+        mButtonTime = view.findViewById(R.id.btn_time_edit_admin);
+        mButtonSave = view.findViewById(R.id.btn_save_edit_admin);
+        mButtonDelete = view.findViewById(R.id.btn_delete_edit_admin);
+        mButtonEdit = view.findViewById(R.id.btn_edit_edit_admin);
+        mTodo = view.findViewById(R.id.radioBtn_todo_edit_admin);
+        mDoing = view.findViewById(R.id.radioBtn_doing_edit_admin);
+        mDone = view.findViewById(R.id.radioBtn_done_edit_admin);
+        mImageViewTaskPicture = view.findViewById(R.id.task_picture_admin);
+        mImageViewTakePicture = view.findViewById(R.id.btn_picture_admin);
     }
 
     private void setData(Task task){
@@ -221,7 +224,7 @@ public class EditTaskFragment extends DialogFragment {
 
                 //create parent-child relations between CDF and DPF
                 datePickerFragment.setTargetFragment(
-                        EditTaskFragment.this,
+                        AdminEditTasksFragment.this,
                         REQUEST_CODE_DATE_PICKER);
 
                 datePickerFragment.show(
@@ -236,7 +239,7 @@ public class EditTaskFragment extends DialogFragment {
                 TimePickerFragment timePickerFragment =
                         TimePickerFragment.newInstance(mCalendar.getTime());
 
-                timePickerFragment.setTargetFragment(EditTaskFragment.this,
+                timePickerFragment.setTargetFragment(AdminEditTasksFragment.this,
                         REQUEST_CODE_TIME_PICKER);
 
                 timePickerFragment.show(
@@ -249,12 +252,6 @@ public class EditTaskFragment extends DialogFragment {
             public void onClick(View v) {
                 mRepository.deleteTask(mTask);
                 dismiss();
-            }
-        });
-        mImageViewShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareIntent();
             }
         });
         mImageViewTakePicture.setOnClickListener(new View.OnClickListener() {
@@ -315,36 +312,6 @@ public class EditTaskFragment extends DialogFragment {
         mImageViewTaskPicture.setImageBitmap(bitmap);
     }
 
-    private void shareIntent() {
-
-        ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(getActivity());
-        Intent intent = intentBuilder
-                .setType("text/plain")
-                .setText(shareWord())
-                .setChooserTitle(getString(R.string.share))
-                .createChooserIntent();
-
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
-
-    private String shareWord() {
-        String title = mTask.getTitle();
-        String description = mTask.getDescription();
-        String date = mTask.getDate().toString();
-        String state = mState;
-
-        String shareMassage = getString(
-                R.string.shareMassage,
-                title,
-                description,
-                date,
-                state);
-
-        return shareMassage;
-    }
-
     private void sendResult() {
         Fragment fragment = getTargetFragment();
         int requestCode = getTargetRequestCode();
@@ -363,6 +330,16 @@ public class EditTaskFragment extends DialogFragment {
             return true;
         } else
             return false;
+    }
+
+    private DateFormat getDateFormat() {
+        //"yyyy/MM/dd"
+        return new SimpleDateFormat("MMM dd,yyyy");
+    }
+
+    private DateFormat getTimeFormat() {
+        //"HH:mm:ss"
+        return new SimpleDateFormat("h:mm a");
     }
 
     private void editTask(){
@@ -406,16 +383,5 @@ public class EditTaskFragment extends DialogFragment {
         mCalendar.set(Calendar.MINUTE,minute);
         DateFormat timeFormat = getTimeFormat();
         mButtonTime.setText(timeFormat.format(userSelectedTime));
-    }
-
-
-    private DateFormat getDateFormat() {
-        //"yyyy/MM/dd"
-        return new SimpleDateFormat("MMM dd,yyyy");
-    }
-
-    private DateFormat getTimeFormat() {
-        //"HH:mm:ss"
-        return new SimpleDateFormat("h:mm a");
     }
 }
