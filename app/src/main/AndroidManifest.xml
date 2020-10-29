@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminDetailActivity"></activity>
+        <activity android:name=".controller.activity.AdminDetailActivity"></activity>
         <activity android:name=".controller.activity.AdminListActivity" />
         <activity
             android:name=".controller.activity.SearchActivity"

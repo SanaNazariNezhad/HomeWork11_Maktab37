@@ -42,8 +42,8 @@ public class TaskDBRepository implements IRepository {
     }
 
     @Override
-    public List<Task> searchTasks(String searchValue) {
-      return mTaskDAO.searchTasks(searchValue);
+    public List<Task> searchTasks(String searchValue,long userId) {
+      return mTaskDAO.searchTasks(searchValue,userId);
     }
 
     @Override

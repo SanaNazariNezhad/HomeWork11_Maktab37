@@ -21,12 +21,17 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.controller.activity.SearchActivity;
+import org.maktab.homework11_maktab37.model.User;
+import org.maktab.homework11_maktab37.repository.IUserRepository;
+import org.maktab.homework11_maktab37.repository.UserDBRepository;
 
 public class TaskListFragment extends Fragment {
 
     private static final String ARG_Username = "username";
     private static final String ARG_Password = "password";
     private String mUsername,mPassword;
+    private IUserRepository mRepository;
+    private User mUser;
 
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager;
@@ -53,6 +58,8 @@ public class TaskListFragment extends Fragment {
         setHasOptionsMenu(true);
         mUsername = getArguments().getString(ARG_Username);
         mPassword = getArguments().getString(ARG_Password);
+        mRepository = UserDBRepository.getInstance(getActivity());
+        mUser = mRepository.getUser(mUsername,mPassword);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class TaskListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.app_bar_search:
                 String  search = (String) item.getTooltipText();
-                Intent intent = SearchActivity.newIntent(getActivity(),search);
+                Intent intent = SearchActivity.newIntent(getActivity(),search,mUser.getPrimaryId());
                 startActivity(intent);
                 return true;
 

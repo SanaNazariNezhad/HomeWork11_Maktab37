@@ -31,20 +31,23 @@ import java.util.List;
 public class SearchFragment extends Fragment {
     public static final String FRAGMENT_TAG_EDIT_TASK = "EditTask";
     public static final int REQUEST_CODE_EDIT_TASK = 0;
+    public static final String ARG_USER_ID = "Arg_userId";
     private IRepository mRepository;
     private RecyclerView mRecyclerView;
     private SearchAdapter mAdapter;
     private List<Task> mTasks;
     private TextInputEditText mEditTextSearch;
     private ImageView mImageViewSearch;
+    private long mUserId;
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    public static SearchFragment newInstance() {
+    public static SearchFragment newInstance(long userId) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
+        args.putLong(ARG_USER_ID,userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,6 +56,7 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRepository = TaskDBRepository.getInstance(getActivity());
+        mUserId = getArguments().getLong(ARG_USER_ID);
 
     }
 
@@ -90,7 +94,7 @@ public class SearchFragment extends Fragment {
 
     private void search() {
        String search = "%" + mEditTextSearch.getText() + "%";
-            mTasks = mRepository.searchTasks(search);
+            mTasks = mRepository.searchTasks(search,mUserId);
     }
 
     private void updateUI() {
@@ -120,7 +124,7 @@ public class SearchFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
+                    EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId(),true);
 
                     editTaskFragment.setTargetFragment(
                             SearchFragment.this,

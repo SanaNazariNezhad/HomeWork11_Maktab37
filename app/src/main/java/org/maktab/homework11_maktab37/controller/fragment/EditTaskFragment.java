@@ -17,14 +17,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.repository.IRepository;
@@ -50,6 +53,7 @@ public class EditTaskFragment extends DialogFragment {
     public static final String BUNDLE_KEY_DATE = "BUNDLE_KEY_DATE";
     public static final String BUNDLE_KEY_TIME = "BUNDLE_KEY_TIME";
     public static final String ARGUMENT_TASK_ID = "Bundle_key_TaskId";
+    public static final String ARGUMENT_SHARE_FEATURE = "argument_share_feature";
 
     private Button mButtonSave, mButtonDelete, mButtonEdit, mButtonDate, mButtonTime;
     private RadioButton mTodo, mDoing, mDone;
@@ -63,17 +67,19 @@ public class EditTaskFragment extends DialogFragment {
     private String mDate, mTime;
     private boolean mFlag;
     private String mState;
-    private ImageView mImageViewShare,mImageViewTaskPicture,mImageViewTakePicture;
+    private ImageView mImageViewShare, mImageViewTaskPicture, mImageViewTakePicture;
     private File mPhotoFile;
+    private boolean mShareFeature;
 
     public EditTaskFragment() {
         // Required empty public constructor
     }
 
-    public static EditTaskFragment newInstance(UUID taskId) {
+    public static EditTaskFragment newInstance(UUID taskId, boolean shareFeature) {
 
         Bundle args = new Bundle();
-        args.putSerializable(ARGUMENT_TASK_ID,taskId);
+        args.putSerializable(ARGUMENT_TASK_ID, taskId);
+        args.putBoolean(ARGUMENT_SHARE_FEATURE, shareFeature);
         EditTaskFragment fragment = new EditTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -83,6 +89,7 @@ public class EditTaskFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID taskId = (UUID) getArguments().getSerializable(ARGUMENT_TASK_ID);
+        mShareFeature = getArguments().getBoolean(ARGUMENT_SHARE_FEATURE);
         mRepository = TaskDBRepository.getInstance(getActivity());
         mTask = mRepository.getTask(taskId);
         mCalendar = Calendar.getInstance();
@@ -93,12 +100,15 @@ public class EditTaskFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
         findViews(view);
         if (mFlag) {
             mButtonDate.setText(mDate);
             mButtonTime.setText(mTime);
         }
+        if (!mShareFeature)
+            mImageViewShare.setVisibility(View.GONE);
         setData(mTask);
         listeners();
         updatePhotoView();
@@ -126,7 +136,7 @@ public class EditTaskFragment extends DialogFragment {
             Calendar userSelectedTime =
                     (Calendar) data.getSerializableExtra(TimePickerFragment.EXTRA_USER_SELECTED_TIME);
             updateTaskTime(userSelectedTime.getTime());
-        }else if (requestCode == REQUEST_CODE_IMAGE_CAPTURE) {
+        } else if (requestCode == REQUEST_CODE_IMAGE_CAPTURE) {
             Uri photoUri = generateUriForPhotoFile();
             getActivity().revokeUriPermission(photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
@@ -152,7 +162,7 @@ public class EditTaskFragment extends DialogFragment {
         mImageViewTakePicture = view.findViewById(R.id.btn_picture);
     }
 
-    private void setData(Task task){
+    private void setData(Task task) {
         mTitle.setText(task.getTitle());
         mTitleForm.setEnabled(false);
         mDescription.setText(task.getDescription());
@@ -166,12 +176,10 @@ public class EditTaskFragment extends DialogFragment {
         if (task.getState().equalsIgnoreCase("Todo")) {
             mTodo.setChecked(true);
             mState = "Todo";
-        }
-        else if (task.getState().equalsIgnoreCase("Doing")) {
+        } else if (task.getState().equalsIgnoreCase("Doing")) {
             mDoing.setChecked(true);
             mState = "Doing";
-        }
-        else if (task.getState().equalsIgnoreCase("Done")) {
+        } else if (task.getState().equalsIgnoreCase("Done")) {
             mDone.setChecked(true);
             mState = "Done";
         }
@@ -207,7 +215,7 @@ public class EditTaskFragment extends DialogFragment {
                         Toast toast = Toast.makeText(getActivity(), strId, Toast.LENGTH_SHORT);
                         toast.show();
                     }
-                }else {
+                } else {
                     dismiss();
                 }
             }
@@ -251,12 +259,14 @@ public class EditTaskFragment extends DialogFragment {
                 dismiss();
             }
         });
-        mImageViewShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareIntent();
-            }
-        });
+        if (mShareFeature) {
+            mImageViewShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    shareIntent();
+                }
+            });
+        }
         mImageViewTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -290,7 +300,7 @@ public class EditTaskFragment extends DialogFragment {
                         takePictureIntent,
                         PackageManager.MATCH_DEFAULT_ONLY);
 
-        for (ResolveInfo activity: activities) {
+        for (ResolveInfo activity : activities) {
             getActivity().grantUriPermission(
                     activity.activityInfo.packageName,
                     photoUri,
@@ -365,7 +375,7 @@ public class EditTaskFragment extends DialogFragment {
             return false;
     }
 
-    private void editTask(){
+    private void editTask() {
         String state = "";
         if (mTodo.isChecked())
             state = "Todo";
@@ -389,9 +399,9 @@ public class EditTaskFragment extends DialogFragment {
         int year = calendar.get(Calendar.YEAR);
         int monthOfYear = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        mCalendar.set(Calendar.YEAR,year);
-        mCalendar.set(Calendar.MONTH,monthOfYear);
-        mCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        mCalendar.set(Calendar.YEAR, year);
+        mCalendar.set(Calendar.MONTH, monthOfYear);
+        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         DateFormat dateFormat = getDateFormat();
         mButtonDate.setText(dateFormat.format(userSelectedDate));
 
@@ -402,8 +412,8 @@ public class EditTaskFragment extends DialogFragment {
         calendar.setTime(userSelectedTime);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        mCalendar.set(Calendar.HOUR_OF_DAY,hour);
-        mCalendar.set(Calendar.MINUTE,minute);
+        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        mCalendar.set(Calendar.MINUTE, minute);
         DateFormat timeFormat = getTimeFormat();
         mButtonTime.setText(timeFormat.format(userSelectedTime));
     }

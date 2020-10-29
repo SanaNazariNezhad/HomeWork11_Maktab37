@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import org.maktab.homework11_maktab37.AdminDetailActivity;
+import org.maktab.homework11_maktab37.controller.activity.AdminDetailActivity;
 import org.maktab.homework11_maktab37.R;
 import org.maktab.homework11_maktab37.model.Task;
 import org.maktab.homework11_maktab37.model.User;
