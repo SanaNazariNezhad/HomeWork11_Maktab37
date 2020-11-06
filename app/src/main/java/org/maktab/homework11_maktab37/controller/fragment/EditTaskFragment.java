@@ -208,6 +208,8 @@ public class EditTaskFragment extends DialogFragment {
             public void onClick(View v) {
                 if (mTitleForm.isEnabled()) {
                     if (validateInput()) {
+                        editTask();
+                        updateTasks(mTask);
                         sendResult();
                         dismiss();
                     } else {
@@ -256,6 +258,7 @@ public class EditTaskFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mRepository.deleteTask(mTask);
+                sendResult();
                 dismiss();
             }
         });
@@ -360,9 +363,6 @@ public class EditTaskFragment extends DialogFragment {
         int requestCode = getTargetRequestCode();
         int resultCode = Activity.RESULT_OK;
         Intent intent = new Intent();
-        editTask();
-        updateTasks(mTask);
-
         fragment.onActivityResult(requestCode, resultCode, intent);
     }
 

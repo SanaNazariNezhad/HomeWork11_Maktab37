@@ -36,6 +36,7 @@ public class TaskListFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
+    private TabsFragment mFragmentTodo,mFragmentDoing,mFragmentDone;
 
 
     public TaskListFragment() {
@@ -58,6 +59,9 @@ public class TaskListFragment extends Fragment {
         setHasOptionsMenu(true);
         mUsername = getArguments().getString(ARG_Username);
         mPassword = getArguments().getString(ARG_Password);
+        mFragmentTodo = TabsFragment.newInstance(mUsername,mPassword,"todo");
+        mFragmentDoing = TabsFragment.newInstance(mUsername,mPassword,"doing");
+        mFragmentDone = TabsFragment.newInstance(mUsername,mPassword,"done");
         mRepository = UserDBRepository.getInstance(getActivity());
         mUser = mRepository.getUser(mUsername,mPassword);
     }
@@ -68,8 +72,27 @@ public class TaskListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         findViews(view);
+        updateView();
         initTab();
         return view;
+    }
+
+    private void updateView() {
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 0){
+                    mFragmentTodo.setUserVisibleHint(true);
+                }
+                else if (position == 1){
+                    mFragmentDoing.setUserVisibleHint(true);
+                }
+                else {
+                    mFragmentDone.setUserVisibleHint(true);
+                }
+            }
+        });
     }
 
 
@@ -153,14 +176,13 @@ public class TaskListFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    TabsFragment todoFragment = TabsFragment.newInstance(mUsername,mPassword,"todo");
-                    return todoFragment;
+                    return mFragmentTodo;
                 case 1:
-                    TabsFragment doingFragment = TabsFragment.newInstance(mUsername,mPassword,"doing");
-                    return doingFragment;
+//                    TabsFragment doingFragment = TabsFragment.newInstance(mUsername,mPassword,"doing");
+                    return mFragmentDoing;
                 case 2:
-                    TabsFragment doneFragment = TabsFragment.newInstance(mUsername,mPassword,"done");
-                    return doneFragment;
+//                    TabsFragment doneFragment = TabsFragment.newInstance(mUsername,mPassword,"done");
+                    return mFragmentDone;
                 default:
                     return null;
             }

@@ -118,7 +118,6 @@ public class TabsFragment extends Fragment {
 
         if (requestCode == REQUEST_CODE_INSERT_TASK || requestCode == REQUEST_CODE_EDIT_TASK) {
             updateUI();
-
         }
     }
 
@@ -179,6 +178,10 @@ public class TabsFragment extends Fragment {
     private void updateUI() {
 
         checkEmptyLayout();
+        updateAdapter();
+    }
+
+    private void updateAdapter() {
         if (mAdapter == null) {
             mAdapter = new TabsAdapter(mTasks);
             mRecyclerView.setAdapter(mAdapter);
@@ -189,7 +192,7 @@ public class TabsFragment extends Fragment {
         }
     }
 
-    private void checkEmptyLayout() {
+    public void checkEmptyLayout() {
         if (mState.equalsIgnoreCase("todo"))
             mTasks = mRepository.getTodoTask(mUser.getPrimaryId());
         else if (mState.equalsIgnoreCase("doing"))
@@ -203,14 +206,12 @@ public class TabsFragment extends Fragment {
             mLayoutEmpty.setVisibility(View.GONE);
     }
 
-    //set offset zero
-//TODO.........................................
-
     @Override
     public void onResume() {
         super.onResume();
         if (getUserVisibleHint() && !isVisible) {
             //your code
+            updateUI();
         }
         isVisible = true;
     }
