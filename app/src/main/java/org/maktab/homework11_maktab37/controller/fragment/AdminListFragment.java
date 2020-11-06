@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class AdminListFragment extends Fragment {
     private IUserRepository mIUserRepository;
     private IRepository mIRepository;
     private RelativeLayout mRelativeLayout;
+    private ImageView mImageViewLogout;
 
     public AdminListFragment() {
         // Required empty public constructor
@@ -67,7 +69,17 @@ public class AdminListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_admin_list, container, false);
         findView(view);
         initView();
+        listeners();
         return view;
+    }
+
+    private void listeners() {
+        mImageViewLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void initView() {
@@ -119,6 +131,7 @@ public class AdminListFragment extends Fragment {
     private void findView(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_admin);
         mRelativeLayout = view.findViewById(R.id.admin_layout);
+        mImageViewLogout = view.findViewById(R.id.img_logoutAdmin);
     }
 
     private void updateUI() {

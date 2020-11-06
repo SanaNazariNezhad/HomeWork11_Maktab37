@@ -224,6 +224,7 @@ public class TabsFragment extends Fragment {
                 @Override
                 public void run() {
                     //your code
+                    updateUI();
                 }
             }, 500);
 
