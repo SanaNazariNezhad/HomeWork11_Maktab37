@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -40,6 +41,7 @@ public class LoginFragment extends Fragment {
     private TextInputEditText mUsername;
     private TextInputEditText mPassword;
     private UserDBRepository mUserRepository;
+    private LottieAnimationView mLottieAnimationView;
     private User mUser;
 
     public LoginFragment() {
@@ -69,8 +71,13 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         findViews(view);
+        initView();
         listeners();
         return view;
+    }
+
+    private void initView() {
+        mLottieAnimationView.playAnimation();
     }
 
     @Override
@@ -101,8 +108,6 @@ public class LoginFragment extends Fragment {
                 mUsernameForm.setErrorEnabled(false);
                 mPasswordForm.setErrorEnabled(false);
                 if (validateInput()) {
-                    //todo.................
-                    //send user against username
                     Intent intent = TaskListActivity.newIntent(getActivity(), mUsername.getText().toString(),mPassword.getText().toString());
                     startActivity(intent);
                 }
@@ -180,6 +185,8 @@ public class LoginFragment extends Fragment {
         mUsername = view.findViewById(R.id.username_login);
         mPassword = view.findViewById(R.id.password_login);
         mButtonAdmin = view.findViewById(R.id.btn_admin_login);
+
+        mLottieAnimationView = view.findViewById(R.id.lottie_login_screen);
     }
 
     private void callToast(int stringId) {

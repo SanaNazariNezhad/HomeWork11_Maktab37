@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -29,6 +30,7 @@ public class SignUpFragment extends Fragment {
     private TextInputEditText mUsername;
     private TextInputEditText mPassword;
     private UserDBRepository mUserRepository;
+    private LottieAnimationView mLottieAnimationView;
 
     private static final String ARG_USERNAME = "username";
     private static final String ARG_PASSWORD = "password";
@@ -66,10 +68,15 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         findViews(view);
+        initView();
         mUsername.setText(mUser);
         mPassword.setText(mPass);
         listener();
         return view;
+    }
+
+    private void initView() {
+        mLottieAnimationView.playAnimation();
     }
 
     private void listener() {
@@ -105,6 +112,7 @@ public class SignUpFragment extends Fragment {
         mUsername = view.findViewById(R.id.username_signUp);
         mPasswordForm = view.findViewById(R.id.password_form_signUp);
         mPassword = view.findViewById(R.id.password_signUp);
+        mLottieAnimationView = view.findViewById(R.id.lottie_signUp_screen);
     }
 
     private boolean validateInput() {
